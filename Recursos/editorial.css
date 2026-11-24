@@ -467,12 +467,14 @@ body.apresentacao {
   background: #f8fafc;
 }
 .capa-principal {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   gap: clamp(1rem, 3.8dvh, 2rem);
   padding: clamp(1.35rem, 5.2dvh, 3.8rem) clamp(1.35rem, 5.5vw, 6rem);
+  padding-top: clamp(3rem, 6.8dvh, 4rem);
   background: #003366;
   color: #fff;
   border-right: 3px solid #005a9c;
@@ -530,21 +532,20 @@ body.apresentacao {
   line-height: 1.3;
 }
 .capa-docente { font-size: clamp(.83rem, 1.25vw, 1rem); }
-.capa-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem; }
 .capa-tela-cheia {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .48rem;
-  padding: .66rem .85rem;
-  min-height: 2.75rem;
-  border: 1px solid #ffffff78;
-  border-radius: 6px;
-  color: #fff;
-  font-size: .92rem;
-  font-weight: 600;
+  position: absolute;
+  top: .65rem;
+  left: .65rem;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 5px;
+  color: #e2edf7;
 }
-.capa-tela-cheia:hover { background: #ffffff1f; }
+.capa-tela-cheia:hover, .capa-tela-cheia:focus-visible { background: #ffffff20; color: #fff; }
+.capa-tela-sair, .presentation-mode .capa-tela-entrar { display: none; }
+.presentation-mode .capa-tela-sair { display: inline; }
 .capa-iniciar {
   display: inline-flex;
   align-items: center;
@@ -618,7 +619,7 @@ body.apresentacao {
   .capa-resumo dl { margin-top: .65rem; }
 }
 @media (max-height: 590px) and (min-width: 681px) {
-  .capa-principal { gap: clamp(.7rem, 2.6dvh, 1rem); padding-block: .85rem; }
+  .capa-principal { gap: clamp(.7rem, 2.6dvh, 1rem); padding-block: 2.85rem .85rem; }
 }
 
 .fechamento-modelo {
