@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Distorção Territorial no SINASC AL 2025: Local de Nascimento (CODMUNNASC) vs. Residência da Mãe (CODMUNRES)</title>
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS E ESTILO ACADEMICO (100% OFFLINE, SEM CDNs)
+       ========================================================================== */
+    :root {
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-subtle: #f1f5f9;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+
+      --text-main: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+
+      --red: #dc2626;
+      --red-dark: #991b1b;
+      --red-bg: #fef2f2;
+      --red-border: #fecaca;
+
+      --blue: #1d4ed8;
+      --blue-dark: #1e3a8a;
+      --blue-bg: #eff6ff;
+      --blue-border: #bfdbfe;
+
+      --green: #059669;
+      --green-dark: #065f46;
+      --green-bg: #ecfdf5;
+      --green-border: #a7f3d0;
+
+      --amber: #d97706;
+      --amber-dark: #92400e;
+      --amber-bg: #fffbeb;
+      --amber-border: #fde68a;
+
+      --slate-badge-bg: #e2e8f0;
+      --slate-badge-text: #475569;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.08);
+      --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, p {
+      margin: 0;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.9em;
+      background: var(--bg-subtle);
+      padding: 1px 5px;
+      border-radius: 4px;
+      color: var(--text-main);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    /* ==========================================================================
+       1. CABECALHO INSTITUCIONAL
+       ========================================================================== */
+    .header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: #ffffff;
+      padding: 24px 20px;
+      border-bottom: 4px solid var(--red);
+    }
+
+    .header-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .header-copy {
+      flex: 1 1 560px;
+    }
+
+    .header-kicker {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #bfdbfe;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+
+    .header-title {
+      font-size: 23px;
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    .header-subtitle {
+      margin-top: 8px;
+      font-size: 13.5px;
+      color: #e2e8f0;
+      max-width: 880px;
+    }
+
+    .btn-print {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 11px 16px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s ease, transform 0.1s ease;
+      white-space: nowrap;
+      min-height: 44px;
+    }
+
+    .btn-print:hover {
+      background: rgba(255, 255, 255, 0.24);
+    }
+
+    .btn-print:active {
+      transform: translateY(1px);
+    }
+
+    /* ==========================================================================
+       CONTEUDO PRINCIPAL E SECOES
+       ========================================================================== */
+    .main {
+      padding: 22px 20px 48px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.25;
+    }
+
+    .section-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    /* ==========================================================================
+       2. FAIXA DE 4 KPIS PRINCIPAIS
+       ========================================================================== */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--blue);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .kpi-card.is-red { border-top-color: var(--red); }
+    .kpi-card.is-amber { border-top-color: var(--amber); }
+    .kpi-card.is-blue { border-top-color: var(--blue); }
+    .kpi-card.is-green { border-top-color: var(--green); }
+
+    .kpi-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .kpi-label {
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+      line-height: 1.35;
+    }
+
+    .badge-red { background: var(--red-bg); color: var(--red-dark); border: 1px solid var(--red-border); }
+    .badge-blue { background: var(--blue-bg); color: var(--blue-dark); border: 1px solid var(--blue-border); }
+    .badge-amber { background: var(--amber-bg); color: var(--amber-dark); border: 1px solid var(--amber-border); }
+    .badge-green { background: var(--green-bg); color: var(--green-dark); border: 1px solid var(--green-border); }
+    .badge-gray { background: var(--slate-badge-bg); color: var(--slate-badge-text); border: 1px solid var(--border-strong); }
+
+    .kpi-value {
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+
+    .kpi-card.is-red .kpi-value { color: var(--red); }
+    .kpi-card.is-amber .kpi-value { color: var(--amber); }
+    .kpi-card.is-blue .kpi-value { color: var(--blue); }
+
+    .kpi-text {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    /* ==========================================================================
+       3. PAINEL INTERATIVO DE GRAFICOS (CSS GRID / FLEXBOX)
+       ========================================================================== */
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+    }
+
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .ctrl-btn {
+      appearance: none;
+      border: 1px solid var(--border-strong);
+      background: #ffffff;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 9px 14px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      min-height: 40px;
+      transition: all 0.15s ease;
+    }
+
+    .ctrl-btn:hover {
+      border-color: var(--text-main);
+      color: var(--text-main);
+    }
+
+    .ctrl-btn.active-red {
+      background: var(--red);
+      border-color: var(--red);
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(220, 38, 38, 0.28);
+    }
+
+    .ctrl-btn.active-blue {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(29, 78, 216, 0.28);
+    }
+
+    .ctrl-btn.active-dark {
+      background: var(--text-main);
+      border-color: var(--text-main);
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.22);
+    }
+
+    .noise-filter-wrap {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      background: var(--amber-bg);
+      border: 1px solid var(--amber-border);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--amber-dark);
+    }
+
+    .noise-filter-wrap.visible {
+      display: flex;
+    }
+
+    .noise-filter-wrap input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--amber);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .noise-filter-wrap label {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .dynamic-explainer {
+      padding: 12px 15px;
+      border-radius: var(--radius-md);
+      font-size: 13.5px;
+      line-height: 1.5;
+      border-left: 4px solid var(--red);
+      background: var(--red-bg);
+      color: #7f1d1d;
+    }
+
+    .dynamic-explainer.mode-blue {
+      border-left-color: var(--blue);
+      background: var(--blue-bg);
+      color: #1e3a8a;
+    }
+
+    .dynamic-explainer.mode-compare {
+      border-left-color: var(--text-main);
+      background: var(--bg-subtle);
+      color: var(--text-main);
+    }
+
+    /* Layout do grafico em CSS Grid (1 coluna ou 2 colunas lado a lado) */
+    .charts-stage {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .charts-stage.two-cols {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .chart-box {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .chart-box.box-red {
+      border-top: 3px solid var(--red);
+    }
+
+    .chart-box.box-blue {
+      border-top: 3px solid var(--blue);
+    }
+
+    .chart-box-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .chart-box-title {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .chart-box.box-red .chart-box-title { color: var(--red-dark); }
+    .chart-box.box-blue .chart-box-title { color: var(--blue-dark); }
+
+    .bar-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 30px minmax(120px, 168px) minmax(80px, 1fr) minmax(125px, 160px);
+      align-items: center;
+      gap: 10px;
+      padding: 7px 10px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      background: var(--bg-page);
+      cursor: pointer;
+      transition: background 0.12s ease, border-color 0.12s ease;
+      text-align: left;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    .charts-stage.two-cols .bar-row {
+      grid-template-columns: 28px minmax(105px, 140px) minmax(60px, 1fr) minmax(112px, 138px);
+      gap: 8px;
+      padding: 6px 8px;
+    }
+
+    .bar-row:hover {
+      background: #eef2f6;
+      border-color: var(--border-strong);
+    }
+
+    .bar-row.is-selected {
+      background: #fef9c3;
+      border-color: var(--amber);
+      box-shadow: inset 0 0 0 1px var(--amber);
+    }
+
+    .bar-rank {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .bar-name-col {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .bar-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .bar-subtag {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--amber-dark);
+      line-height: 1.2;
+    }
+
+    .bar-track {
+      width: 100%;
+      height: 18px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+
+    .bar-fill.fill-red {
+      background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+    }
+
+    .bar-fill.fill-blue {
+      background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
+    }
+
+    .bar-val-col {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      line-height: 1.2;
+    }
+
+    .bar-val-main {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-main);
+      white-space: nowrap;
+    }
+
+    .box-red .bar-val-main { color: var(--red-dark); }
+    .box-blue .bar-val-main { color: var(--blue-dark); }
+
+    .bar-val-sub {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* Inspetor Rapido do Municipio */
+    .inspector-box {
+      border: 2px solid var(--blue-border);
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .inspector-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .inspector-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .inspector-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .insp-col {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .insp-col.col-blue { border-left: 4px solid var(--blue); }
+    .insp-col.col-red { border-left: 4px solid var(--red); }
+    .insp-col.col-delta { border-left: 4px solid var(--amber); }
+
+    .insp-col-title {
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+
+    .insp-metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .insp-metric-row strong {
+      font-size: 14px;
+      color: var(--text-main);
+    }
+
+    /* ==========================================================================
+       4. RAIO-X DOS 5 PRINCIPAIS POLOS + PARTOS FORA DE ALAGOAS
+       ========================================================================== */
+    .polos-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .polo-card {
+      background: var(--bg-page);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      cursor: pointer;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .polo-card:hover {
+      border-color: var(--blue);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .polo-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .polo-total {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stacked-track {
+      width: 100%;
+      height: 22px;
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      background: #e2e8f0;
+      border: 1px solid var(--border-strong);
+    }
+
+    .stacked-res {
+      background: var(--blue);
+      color: #ffffff;
+      font-size: 10.5px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .stacked-vis {
+      background: var(--red);
+      color: #ffffff;
+      font-size: 10.5px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .polo-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .polo-stat-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .polo-real-box {
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border-strong);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--blue-dark);
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .polo-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    .legend-dot {
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+      border-radius: 3px;
+      margin-right: 6px;
+      vertical-align: -1px;
+    }
+
+    .out-state-box {
+      background: var(--amber-bg);
+      border: 1px solid var(--amber-border);
+      border-left: 4px solid var(--amber);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .out-state-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--amber-dark);
+    }
+
+    .out-state-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .out-pill {
+      background: #ffffff;
+      border: 1px solid var(--amber-border);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      font-size: 12.5px;
+      color: var(--text-main);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ==========================================================================
+       5. TABELA COMPLETA E PESQUISAVEL DOS 102 MUNICIPIOS
+       ========================================================================== */
+    .table-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-box {
+      flex: 1 1 260px;
+      max-width: 380px;
+      padding: 10px 13px;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 13.5px;
+      color: var(--text-main);
+      background: #ffffff;
+      min-height: 42px;
+    }
+
+    .search-box:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.14);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .filter-btn {
+      appearance: none;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-subtle);
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      min-height: 36px;
+      transition: all 0.15s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--text-main);
+      color: var(--text-main);
+    }
+
+    .filter-btn.active {
+      background: var(--text-main);
+      border-color: var(--text-main);
+      color: #ffffff;
+    }
+
+    .table-scroll {
+      width: 100%;
+      max-height: 540px;
+      overflow: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: #ffffff;
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      min-width: 960px;
+    }
+
+    table.data-table thead th {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: 700;
+      text-align: left;
+      padding: 11px 10px;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      border-bottom: 2px solid #1e293b;
+    }
+
+    table.data-table thead th:hover {
+      background: #1e293b;
+    }
+
+    table.data-table thead th.num {
+      text-align: right;
+    }
+
+    .sort-arrow {
+      display: inline-block;
+      margin-left: 4px;
+      font-size: 10px;
+      color: #93c5fd;
+    }
+
+    table.data-table tbody td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    table.data-table tbody td.num {
+      text-align: right;
+    }
+
+    table.data-table tbody tr {
+      cursor: pointer;
+      transition: background 0.1s ease;
+    }
+
+    table.data-table tbody tr:hover td {
+      background: #f1f5f9;
+    }
+
+    table.data-table tbody tr.row-zero td {
+      background: #fafafa;
+    }
+
+    table.data-table tbody tr.row-selected td {
+      background: #fef9c3;
+    }
+
+    .txt-blue { color: var(--blue-dark); font-weight: 700; }
+    .txt-red { color: var(--red-dark); font-weight: 700; }
+    .txt-green { color: var(--green-dark); font-weight: 700; }
+    .txt-muted { color: var(--text-muted); }
+
+    .table-footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       6. COLA RAPIDA PARA DEFESA NA BANCA
+       ========================================================================== */
+    .defense-card {
+      background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+      border: 2px solid #0f172a;
+      border-radius: var(--radius-lg);
+      padding: 20px 22px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .defense-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .defense-item {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--blue);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .defense-item.is-red { border-left-color: var(--red); }
+    .defense-item.is-green { border-left-color: var(--green); }
+
+    .defense-item-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .defense-item-text {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .page-footer {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 16px 20px 32px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    /* ==========================================================================
+       RESPONSIVIDADE (TABLET E MOBILE)
+       ========================================================================== */
+    @media (max-width: 1180px) {
+      .polos-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 960px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .charts-stage.two-cols {
+        grid-template-columns: 1fr;
+      }
+      .inspector-grid,
+      .defense-grid {
+        grid-template-columns: 1fr;
+      }
+      .polos-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .header {
+        padding: 18px 14px;
+      }
+      .header-title {
+        font-size: 19px;
+      }
+      .main {
+        padding: 16px 14px 36px 14px;
+      }
+      .card {
+        padding: 14px;
+      }
+      .kpi-grid,
+      .polos-grid {
+        grid-template-columns: 1fr;
+      }
+      .bar-row,
+      .charts-stage.two-cols .bar-row {
+        grid-template-columns: 24px 1fr auto;
+        grid-template-rows: auto auto;
+        row-gap: 6px;
+      }
+      .bar-track {
+        grid-column: 1 / -1;
+      }
+      .bar-val-col {
+        grid-column: 3;
+        grid-row: 1;
+      }
+    }
+
+    /* ==========================================================================
+       IMPRESSAO / SALVAR PDF VIA CTRL+P NO EDGE
+       ========================================================================== */
+    @media print {
+      @page {
+        size: A4 landscape;
+        margin: 10mm;
+      }
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      body {
+        background: #ffffff !important;
+        font-size: 11px;
+      }
+      .header {
+        padding: 12px 16px;
+        border-radius: 6px;
+      }
+      .btn-print,
+      .controls-panel,
+      .table-toolbar {
+        display: none !important;
+      }
+      .main {
+        padding: 12px 0;
+        gap: 14px;
+      }
+      .card,
+      .kpi-card,
+      .defense-card,
+      .polo-card,
+      .inspector-box {
+        box-shadow: none !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .kpi-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .polos-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .defense-grid,
+      .inspector-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .table-scroll {
+        max-height: none !important;
+        overflow: visible !important;
+      }
+      table.data-table {
+        min-width: 100%;
+        font-size: 9.5px;
+      }
+      table.data-table thead th {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. CABECALHO INSTITUCIONAL -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="header-copy">
+        <span class="header-kicker">Projeto AB2 | Ciência de Dados (IC/UFAL) | Auditoria Territorial SINASC AL 2025</span>
+        <h1 class="header-title">Distorção Territorial no SINASC AL 2025: Local de Nascimento (CODMUNNASC) vs. Residência da Mãe (CODMUNRES)</h1>
+        <p class="header-subtitle">Base: 46.347 nascimentos válidos em Alagoas (excluídos 51 ignorados). Critério de inadequação: menos de 7 consultas (Rede Alyne, Portaria GM/MS nº 5.350/2024).</p>
+      </div>
+      <button type="button" class="btn-print" onclick="window.print()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        Imprimir / Salvar PDF (Ctrl+P)
+      </button>
+    </div>
+  </header>
+
+  <main class="container main">
+
+    <!-- 2. FAIXA DE 4 KPIS PRINCIPAIS -->
+    <section class="kpi-grid" aria-label="Indicadores principais de distorção territorial">
+      <article class="kpi-card is-red">
+        <div class="kpi-top">
+          <span class="kpi-label">Deslocamento para o Parto</span>
+          <span class="badge badge-red">22.671 de 46.347</span>
+        </div>
+        <div class="kpi-value">48,92% fora da cidade</div>
+        <p class="kpi-text">22.671 de 46.347 nascimentos ocorreram fora do município de residência da mãe (22.307 em outra cidade de AL e 364 em outros estados).</p>
+      </article>
+
+      <article class="kpi-card is-amber">
+        <div class="kpi-top">
+          <span class="kpi-label">Evasão Total de Partos</span>
+          <span class="badge badge-amber">CODMUNNASC = 0</span>
+        </div>
+        <div class="kpi-value">33 cidades somem do mapa</div>
+        <p class="kpi-text">33 dos 102 municípios de Alagoas tiveram 0 partos válidos ocorridos no próprio território (e 54 tiveram 0 partos hospitalares).</p>
+      </article>
+
+      <article class="kpi-card is-blue">
+        <div class="kpi-top">
+          <span class="kpi-label">Efeito Diluição na Capital</span>
+          <span class="badge badge-blue">-3,97 p.p.</span>
+        </div>
+        <div class="kpi-value">Maceió: taxa cai artificialmente</div>
+        <p class="kpi-text">De 30,43% (residência, 3.934/12.929) para 26,46% (local do parto, 5.259/19.878), uma queda enganosa de -3,97 pontos percentuais causada pela diluição com 7.028 visitantes.</p>
+      </article>
+
+      <article class="kpi-card is-red">
+        <div class="kpi-top">
+          <span class="kpi-label">Ruído de Denominador 1/1</span>
+          <span class="badge badge-red">Taxa falsa de 100%</span>
+        </div>
+        <div class="kpi-value">3 cidades atingem 100% falsos</div>
+        <p class="kpi-text">Estrela de Alagoas, Barra de São Miguel e Santa Luzia do Norte registram apenas 1 parto local cada (todos inadequados), distorcendo o ranking por taxa.</p>
+      </article>
+    </section>
+
+    <!-- 3. PAINEL INTERATIVO PRINCIPAL DE GRAFICOS (TOP 12) -->
+    <section class="card" aria-label="Painel interativo de gráficos comparativos">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Painel Interativo de Rankings (Top 12 Municípios)</h2>
+          <p class="section-desc">Alterne visão territorial e métrica para comparar o viés do local do parto frente à residência da mãe. Clique em qualquer barra para abrir os detalhes no Inspetor Rápido abaixo.</p>
+        </div>
+      </div>
+
+      <div class="controls-panel">
+        <div class="controls-row">
+          <div class="btn-group" role="group" aria-label="Selecionar visão territorial">
+            <button type="button" id="btnViewEnganosa" class="ctrl-btn active-red" onclick="setView('enganosa')">Visão Enganosa (Local do Parto: CODMUNNASC)</button>
+            <button type="button" id="btnViewCorrigida" class="ctrl-btn" onclick="setView('corrigida')">Visão Corrigida (Residência da Mãe: CODMUNRES)</button>
+            <button type="button" id="btnViewLado" class="ctrl-btn" onclick="setView('lado')">Comparação Lado a Lado</button>
+          </div>
+
+          <div class="btn-group" role="group" aria-label="Selecionar métrica do gráfico">
+            <button type="button" id="btnMetricVol" class="ctrl-btn active-dark" onclick="setMetric('volume')">Volume Bruto (casos &lt; 7 consultas)</button>
+            <button type="button" id="btnMetricTaxa" class="ctrl-btn" onclick="setMetric('taxa')">Taxa Percentual (%)</button>
+          </div>
+        </div>
+
+        <div id="noiseFilterWrap" class="noise-filter-wrap">
+          <input type="checkbox" id="chkMinPartos" onchange="toggleMinPartos(this.checked)">
+          <label for="chkMinPartos">Ocultar municípios com menos de 50 partos locais (evitar ruído de 1/1 = 100%)</label>
+        </div>
+      </div>
+
+      <div id="dynamicExplainer" class="dynamic-explainer"></div>
+
+      <div id="chartsStage" class="charts-stage"></div>
+
+      <!-- Inspetor Rapido do Municipio -->
+      <div id="inspectorBox" class="inspector-box" aria-live="polite"></div>
+    </section>
+
+    <!-- 4. RAIO-X DOS 5 PRINCIPAIS POLOS DE PARTO + PARTOS FORA DE ALAGOAS -->
+    <section class="card" aria-label="Raio-X dos 5 principais polos de parto e nascimentos fora de Alagoas">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Raio-X dos 5 Principais Polos de Parto + Partos Fora de Alagoas</h2>
+          <p class="section-desc">Proporção de mães residentes versus visitantes vindas de outros municípios em cada polo regional (clique em um cartão para carregar o município no Inspetor Rápido).</p>
+        </div>
+        <div class="polo-legend">
+          <span><span class="legend-dot" style="background: var(--blue);"></span>Residentes do próprio polo</span>
+          <span><span class="legend-dot" style="background: var(--red);"></span>Visitantes de outros municípios</span>
+        </div>
+      </div>
+
+      <div class="polos-grid" id="polosGrid"></div>
+
+      <div class="out-state-box">
+        <div class="out-state-title">Fuga Interestadual: 364 nascimentos (0,79% do total) de mães alagoanas ocorreram fora de Alagoas</div>
+        <div class="out-state-pills">
+          <div class="out-pill"><strong>Palmares/PE:</strong> 82 partos (21 inad., 25,61%)</div>
+          <div class="out-pill"><strong>Paulo Afonso/BA:</strong> 75 partos (14 inad., 18,67%)</div>
+          <div class="out-pill"><strong>Propriá/SE:</strong> 72 partos (13 inad., 18,06%)</div>
+          <div class="out-pill"><strong>Recife/PE:</strong> 31 partos (9 inad., 29,03%)</div>
+          <div class="out-pill"><strong>Aracaju/SE:</strong> 23 partos (4 inad., 17,39%)</div>
+          <div class="out-pill"><strong>Outros destinos fora de AL:</strong> 81 partos</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. TABELA COMPLETA E PESQUISAVEL DOS 102 MUNICIPIOS -->
+    <section class="card" aria-label="Tabela completa dos 102 municípios de Alagoas">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Tabela Completa e Pesquisável dos 102 Municípios de Alagoas</h2>
+          <p class="section-desc">Clique nos cabeçalhos para ordenar (valores nulos dos 33 municípios sem partos locais ficam sempre ao final) ou clique em qualquer linha para abrir no Inspetor Rápido.</p>
+        </div>
+      </div>
+
+      <div class="table-toolbar">
+        <input type="search" id="searchInput" class="search-box" placeholder="Buscar por nome ou código IBGE (ex.: Maceio, Cajueiro, 270770)..." oninput="renderTable()">
+        <div class="filter-group" role="group" aria-label="Filtros rápidos da tabela">
+          <button type="button" class="filter-btn active" onclick="setTableFilter('all', this)">Todos (102)</button>
+          <button type="button" class="filter-btn" onclick="setTableFilter('polos', this)">Polos receptores (9 com saldo &gt; 0)</button>
+          <button type="button" class="filter-btn" onclick="setTableFilter('zeros', this)">Sem partos locais (33)</button>
+          <button type="button" class="filter-btn" id="btnFilterExtreme" onclick="setTableFilter('extreme', this)">Taxa local &gt;= 40% (distorção extrema)</button>
+        </div>
+      </div>
+
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th onclick="sortTable('mun')">Município <span class="sort-arrow" id="arrow-mun"></span></th>
+              <th class="num" onclick="sortTable('nr')">Nasc. Residência <span class="sort-arrow" id="arrow-nr"></span></th>
+              <th class="num" onclick="sortTable('ir')">Inad. Residência <span class="sort-arrow" id="arrow-ir"></span></th>
+              <th class="num" onclick="sortTable('tr')">Taxa Residência % <span class="sort-arrow" id="arrow-tr"></span></th>
+              <th class="num" onclick="sortTable('nl')">Nasc. Local Parto <span class="sort-arrow" id="arrow-nl"></span></th>
+              <th class="num" onclick="sortTable('il')">Inad. Local Parto <span class="sort-arrow" id="arrow-il"></span></th>
+              <th class="num" onclick="sortTable('tl')">Taxa Local % <span class="sort-arrow" id="arrow-tl"></span></th>
+              <th class="num" onclick="sortTable('dn')">Saldo Nasc. <span class="sort-arrow" id="arrow-dn"></span></th>
+              <th class="num" onclick="sortTable('dt')">Diferença Taxa p.p. <span class="sort-arrow" id="arrow-dt"></span></th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="table-footer">
+        <span id="tableCount">Exibindo 102 de 102 municípios.</span>
+        <span>Nota: Cidades com 0 partos locais exibem "Sem partos" nas colunas de taxa local e diferença, permanecendo ao final em qualquer ordenação dessas colunas.</span>
+      </div>
+    </section>
+
+    <!-- 6. BLOCO COLA RAPIDA PARA DEFESA NA BANCA -->
+    <section class="defense-card" aria-label="Cola rápida para defesa na banca">
+      <div class="section-head" style="border-bottom-color: var(--border-strong); padding-bottom: 10px;">
+        <div>
+          <h2 class="section-title">Cola Rápida para Defesa na Banca</h2>
+          <p class="section-desc">Três argumentos objetivos e verificados para justificar o uso de <code>CODMUNRES</code> em vez de <code>CODMUNNASC</code>.</p>
+        </div>
+        <span class="badge badge-blue">Roteiro de Apoio Oral</span>
+      </div>
+
+      <div class="defense-grid">
+        <article class="defense-item is-red">
+          <h3 class="defense-item-title">1. O pré-natal acontece onde a mãe mora</h3>
+          <p class="defense-item-text">Em Alagoas, 48,92% dos partos (22.671 de 46.347) ocorrem fora do município de residência da gestante porque a rede obstétrica é regionalizada. Avaliar o pré-natal pelo local do parto atribui à maternidade de destino o desempenho da atenção básica da cidade de origem.</p>
+        </article>
+
+        <article class="defense-item">
+          <h3 class="defense-item-title">2. Polos incham no volume e diluem a taxa</h3>
+          <p class="defense-item-text">Maceió salta de 12.929 residentes para 19.878 partos locais (+7.028 visitantes), fazendo sua taxa cair artificialmente de 30,43% para 26,46% (-3,97 p.p.). Já Santana do Ipanema recebe 81,81% de visitantes e sobe para o 3º maior volume bruto de casos do estado.</p>
+        </article>
+
+        <article class="defense-item is-green">
+          <h3 class="defense-item-title">3. Cidades sem maternidade somem ou explodem</h3>
+          <p class="defense-item-text">No recorte por local do parto, 33 municípios ficam com zero registros e desaparecem do diagnóstico, enquanto cidades com poucos partos de urgência viram falsos extremos (como Rio Largo saltando de 22,44% para 44,68%, ou 3 cidades batendo 100% com apenas 1 parto cada).</p>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="page-footer">
+    <span>Fonte: Microdados SINASC/DATASUS Alagoas 2025 (46.347 nascimentos válidos de mães residentes em Alagoas).</span>
+    <span>Aplicação 100% offline, sem dependências externas, otimizada para Microsoft Edge e impressão via Ctrl+P.</span>
+  </footer>
+
+  <script>
+    /* ==========================================================================
+       DADOS EXATOS DOS 102 MUNICIPIOS DE ALAGOAS (SINASC 2025)
+       ========================================================================== */
+    const DATA = [
+      {"cod": 270430, "mun": "Maceió", "nr": 12929, "ir": 3934, "tr": 30.43, "nl": 19878, "il": 5259, "tl": 26.46, "dn": 6949, "di": 1325, "dt": -3.97},
+      {"cod": 270030, "mun": "Arapiraca", "nr": 3589, "ir": 530, "tr": 14.77, "nl": 6895, "il": 977, "tl": 14.17, "dn": 3306, "di": 447, "dt": -0.6},
+      {"cod": 270770, "mun": "Rio Largo", "nr": 1279, "ir": 287, "tr": 22.44, "nl": 47, "il": 21, "tl": 44.68, "dn": -1232, "di": -266, "dt": 22.24},
+      {"cod": 270630, "mun": "Palmeira dos Índios", "nr": 1040, "ir": 199, "tr": 19.13, "nl": 2334, "il": 417, "tl": 17.87, "dn": 1294, "di": 218, "dt": -1.27},
+      {"cod": 270470, "mun": "Marechal Deodoro", "nr": 900, "ir": 188, "tr": 20.89, "nl": 155, "il": 44, "tl": 28.39, "dn": -745, "di": -144, "dt": 7.5},
+      {"cod": 270800, "mun": "Santana do Ipanema", "nr": 880, "ir": 109, "tr": 12.39, "nl": 4607, "il": 535, "tl": 11.61, "dn": 3727, "di": 426, "dt": -0.77},
+      {"cod": 270670, "mun": "Penedo", "nr": 869, "ir": 85, "tr": 9.78, "nl": 1836, "il": 192, "tl": 10.46, "dn": 967, "di": 107, "dt": 0.68},
+      {"cod": 270230, "mun": "Coruripe", "nr": 819, "ir": 106, "tr": 12.94, "nl": 754, "il": 97, "tl": 12.86, "dn": -65, "di": -9, "dt": -0.08},
+      {"cod": 270930, "mun": "União dos Palmares", "nr": 806, "ir": 137, "tr": 17.0, "nl": 1757, "il": 354, "tl": 20.15, "dn": 951, "di": 217, "dt": 3.15},
+      {"cod": 270860, "mun": "São Miguel dos Campos", "nr": 754, "ir": 129, "tr": 17.11, "nl": 1941, "il": 216, "tl": 11.13, "dn": 1187, "di": 87, "dt": -5.98},
+      {"cod": 270240, "mun": "Delmiro Gouveia", "nr": 731, "ir": 93, "tr": 12.72, "nl": 1852, "il": 230, "tl": 12.42, "dn": 1121, "di": 137, "dt": -0.3},
+      {"cod": 270450, "mun": "Maragogi", "nr": 660, "ir": 118, "tr": 17.88, "nl": 157, "il": 29, "tl": 18.47, "dn": -503, "di": -89, "dt": 0.59},
+      {"cod": 270840, "mun": "São José da Tapera", "nr": 649, "ir": 61, "tr": 9.4, "nl": 110, "il": 14, "tl": 12.73, "dn": -539, "di": -47, "dt": 3.33},
+      {"cod": 270915, "mun": "Teotônio Vilela", "nr": 567, "ir": 23, "tr": 4.06, "nl": 81, "il": 7, "tl": 8.64, "dn": -486, "di": -16, "dt": 4.59},
+      {"cod": 270290, "mun": "Girau do Ponciano", "nr": 556, "ir": 82, "tr": 14.75, "nl": 12, "il": 1, "tl": 8.33, "dn": -544, "di": -81, "dt": -6.41},
+      {"cod": 270040, "mun": "Atalaia", "nr": 541, "ir": 102, "tr": 18.85, "nl": 117, "il": 24, "tl": 20.51, "dn": -424, "di": -78, "dt": 1.66},
+      {"cod": 270690, "mun": "Pilar", "nr": 536, "ir": 68, "tr": 12.69, "nl": 173, "il": 18, "tl": 10.4, "dn": -363, "di": -50, "dt": -2.28},
+      {"cod": 270140, "mun": "Campo Alegre", "nr": 470, "ir": 35, "tr": 7.45, "nl": 123, "il": 16, "tl": 13.01, "dn": -347, "di": -19, "dt": 5.56},
+      {"cod": 270710, "mun": "Piranhas", "nr": 462, "ir": 48, "tr": 10.39, "nl": 49, "il": 4, "tl": 8.16, "dn": -413, "di": -44, "dt": -2.23},
+      {"cod": 270550, "mun": "Murici", "nr": 461, "ir": 112, "tr": 24.3, "nl": 70, "il": 23, "tl": 32.86, "dn": -391, "di": -89, "dt": 8.56},
+      {"cod": 270880, "mun": "São Sebastião", "nr": 456, "ir": 50, "tr": 10.96, "nl": 75, "il": 11, "tl": 14.67, "dn": -381, "di": -39, "dt": 3.7},
+      {"cod": 270850, "mun": "São Luís do Quitunde", "nr": 455, "ir": 99, "tr": 21.76, "nl": 123, "il": 31, "tl": 25.2, "dn": -332, "di": -68, "dt": 3.45},
+      {"cod": 270235, "mun": "Craíbas", "nr": 378, "ir": 55, "tr": 14.55, "nl": 77, "il": 14, "tl": 18.18, "dn": -301, "di": -41, "dt": 3.63},
+      {"cod": 270420, "mun": "Limoeiro de Anadia", "nr": 377, "ir": 47, "tr": 12.47, "nl": 7, "il": 3, "tl": 42.86, "dn": -370, "di": -44, "dt": 30.39},
+      {"cod": 270730, "mun": "Porto Calvo", "nr": 377, "ir": 50, "tr": 13.26, "nl": 1754, "il": 312, "tl": 17.79, "dn": 1377, "di": 262, "dt": 4.53},
+      {"cod": 270920, "mun": "Traipu", "nr": 376, "ir": 41, "tr": 10.9, "nl": 55, "il": 5, "tl": 9.09, "dn": -321, "di": -36, "dt": -1.81},
+      {"cod": 270640, "mun": "Pão de Açúcar", "nr": 357, "ir": 39, "tr": 10.92, "nl": 37, "il": 7, "tl": 18.92, "dn": -320, "di": -32, "dt": 7.99},
+      {"cod": 270890, "mun": "Satuba", "nr": 337, "ir": 69, "tr": 20.47, "nl": 3, "il": 1, "tl": 33.33, "dn": -334, "di": -68, "dt": 12.86},
+      {"cod": 270260, "mun": "Feira Grande", "nr": 335, "ir": 49, "tr": 14.63, "nl": 6, "il": 2, "tl": 33.33, "dn": -329, "di": -47, "dt": 18.71},
+      {"cod": 270310, "mun": "Igaci", "nr": 335, "ir": 76, "tr": 22.69, "nl": 0, "il": 0, "tl": null, "dn": -335, "di": -76, "dt": null},
+      {"cod": 270510, "mun": "Matriz de Camaragibe", "nr": 334, "ir": 64, "tr": 19.16, "nl": 38, "il": 11, "tl": 28.95, "dn": -296, "di": -53, "dt": 9.79},
+      {"cod": 270570, "mun": "Olho d'Água das Flores", "nr": 331, "ir": 61, "tr": 18.43, "nl": 0, "il": 0, "tl": null, "dn": -331, "di": -61, "dt": null},
+      {"cod": 270940, "mun": "Viçosa", "nr": 323, "ir": 50, "tr": 15.48, "nl": 107, "il": 24, "tl": 22.43, "dn": -216, "di": -26, "dt": 6.95},
+      {"cod": 270400, "mun": "Junqueiro", "nr": 317, "ir": 39, "tr": 12.3, "nl": 42, "il": 8, "tl": 19.05, "dn": -275, "di": -31, "dt": 6.74},
+      {"cod": 270830, "mun": "São José da Laje", "nr": 312, "ir": 90, "tr": 28.85, "nl": 49, "il": 17, "tl": 34.69, "dn": -263, "di": -73, "dt": 5.85},
+      {"cod": 270500, "mun": "Mata Grande", "nr": 308, "ir": 35, "tr": 11.36, "nl": 18, "il": 4, "tl": 22.22, "dn": -290, "di": -31, "dt": 10.86},
+      {"cod": 270010, "mun": "Água Branca", "nr": 308, "ir": 53, "tr": 17.21, "nl": 6, "il": 2, "tl": 33.33, "dn": -302, "di": -51, "dt": 16.13},
+      {"cod": 270070, "mun": "Batalha", "nr": 305, "ir": 56, "tr": 18.36, "nl": 151, "il": 30, "tl": 19.87, "dn": -154, "di": -26, "dt": 1.51},
+      {"cod": 270100, "mun": "Boca da Mata", "nr": 299, "ir": 36, "tr": 12.04, "nl": 58, "il": 0, "tl": 0.0, "dn": -241, "di": -36, "dt": -12.04},
+      {"cod": 270410, "mun": "Lagoa da Canoa", "nr": 296, "ir": 28, "tr": 9.46, "nl": 6, "il": 2, "tl": 33.33, "dn": -290, "di": -26, "dt": 23.87},
+      {"cod": 270160, "mun": "Canapi", "nr": 295, "ir": 15, "tr": 5.08, "nl": 12, "il": 3, "tl": 25.0, "dn": -283, "di": -12, "dt": 19.92},
+      {"cod": 270750, "mun": "Porto Real do Colégio", "nr": 292, "ir": 45, "tr": 15.41, "nl": 2, "il": 0, "tl": 0.0, "dn": -290, "di": -45, "dt": -15.41},
+      {"cod": 270330, "mun": "Inhapi", "nr": 287, "ir": 39, "tr": 13.59, "nl": 14, "il": 3, "tl": 21.43, "dn": -273, "di": -36, "dt": 7.84},
+      {"cod": 270320, "mun": "Igreja Nova", "nr": 287, "ir": 33, "tr": 11.5, "nl": 2, "il": 0, "tl": 0.0, "dn": -285, "di": -33, "dt": -11.5},
+      {"cod": 270380, "mun": "Joaquim Gomes", "nr": 281, "ir": 82, "tr": 29.18, "nl": 59, "il": 26, "tl": 44.07, "dn": -222, "di": -56, "dt": 14.89},
+      {"cod": 270130, "mun": "Cajueiro", "nr": 279, "ir": 95, "tr": 34.05, "nl": 111, "il": 58, "tl": 52.25, "dn": -168, "di": -37, "dt": 18.2},
+      {"cod": 270050, "mun": "Barra de Santo Antônio", "nr": 264, "ir": 82, "tr": 31.06, "nl": 18, "il": 8, "tl": 44.44, "dn": -246, "di": -74, "dt": 13.38},
+      {"cod": 270910, "mun": "Taquarana", "nr": 261, "ir": 38, "tr": 14.56, "nl": 5, "il": 1, "tl": 20.0, "dn": -256, "di": -37, "dt": 5.44},
+      {"cod": 270680, "mun": "Piaçabuçu", "nr": 257, "ir": 39, "tr": 15.18, "nl": 30, "il": 7, "tl": 23.33, "dn": -227, "di": -32, "dt": 8.16},
+      {"cod": 270644, "mun": "Paripueira", "nr": 248, "ir": 60, "tr": 24.19, "nl": 5, "il": 3, "tl": 60.0, "dn": -243, "di": -57, "dt": 35.81},
+      {"cod": 270720, "mun": "Poço das Trincheiras", "nr": 243, "ir": 45, "tr": 18.52, "nl": 0, "il": 0, "tl": null, "dn": -243, "di": -45, "dt": null},
+      {"cod": 270255, "mun": "Estrela de Alagoas", "nr": 240, "ir": 55, "tr": 22.92, "nl": 1, "il": 1, "tl": 100.0, "dn": -239, "di": -54, "dt": 77.08},
+      {"cod": 270650, "mun": "Passo de Camaragibe", "nr": 239, "ir": 37, "tr": 15.48, "nl": 0, "il": 0, "tl": null, "dn": -239, "di": -37, "dt": null},
+      {"cod": 270210, "mun": "Colônia Leopoldina", "nr": 237, "ir": 42, "tr": 17.72, "nl": 16, "il": 2, "tl": 12.5, "dn": -221, "di": -40, "dt": -5.22},
+      {"cod": 270520, "mun": "Messias", "nr": 232, "ir": 47, "tr": 20.26, "nl": 15, "il": 8, "tl": 53.33, "dn": -217, "di": -39, "dt": 33.07},
+      {"cod": 270440, "mun": "Major Isidoro", "nr": 231, "ir": 32, "tr": 13.85, "nl": 2, "il": 1, "tl": 50.0, "dn": -229, "di": -31, "dt": 36.15},
+      {"cod": 270300, "mun": "Ibateguara", "nr": 228, "ir": 50, "tr": 21.93, "nl": 48, "il": 12, "tl": 25.0, "dn": -180, "di": -38, "dt": 3.07},
+      {"cod": 270895, "mun": "Senador Rui Palmeira", "nr": 222, "ir": 12, "tr": 5.41, "nl": 3, "il": 1, "tl": 33.33, "dn": -219, "di": -11, "dt": 27.93},
+      {"cod": 270610, "mun": "Ouro Branco", "nr": 220, "ir": 37, "tr": 16.82, "nl": 3, "il": 0, "tl": 0.0, "dn": -217, "di": -37, "dt": -16.82},
+      {"cod": 270600, "mun": "Olivença", "nr": 206, "ir": 16, "tr": 7.77, "nl": 0, "il": 0, "tl": null, "dn": -206, "di": -16, "dt": null},
+      {"cod": 270020, "mun": "Anadia", "nr": 206, "ir": 20, "tr": 9.71, "nl": 5, "il": 2, "tl": 40.0, "dn": -201, "di": -18, "dt": 30.29},
+      {"cod": 270642, "mun": "Pariconha", "nr": 202, "ir": 25, "tr": 12.38, "nl": 1, "il": 0, "tl": 0.0, "dn": -201, "di": -25, "dt": -12.38},
+      {"cod": 270180, "mun": "Carneiros", "nr": 188, "ir": 16, "tr": 8.51, "nl": 0, "il": 0, "tl": null, "dn": -188, "di": -16, "dt": null},
+      {"cod": 270460, "mun": "Maravilha", "nr": 178, "ir": 18, "tr": 10.11, "nl": 3, "il": 1, "tl": 33.33, "dn": -175, "di": -17, "dt": 23.22},
+      {"cod": 270170, "mun": "Capela", "nr": 167, "ir": 15, "tr": 8.98, "nl": 35, "il": 6, "tl": 17.14, "dn": -132, "di": -9, "dt": 8.16},
+      {"cod": 270200, "mun": "Coité do Nóia", "nr": 167, "ir": 33, "tr": 19.76, "nl": 4, "il": 1, "tl": 25.0, "dn": -163, "di": -32, "dt": 5.24},
+      {"cod": 270480, "mun": "Maribondo", "nr": 167, "ir": 40, "tr": 23.95, "nl": 2, "il": 0, "tl": 0.0, "dn": -165, "di": -40, "dt": -23.95},
+      {"cod": 270760, "mun": "Quebrangulo", "nr": 162, "ir": 18, "tr": 11.11, "nl": 1, "il": 0, "tl": 0.0, "dn": -161, "di": -18, "dt": -11.11},
+      {"cod": 270540, "mun": "Monteirópolis", "nr": 161, "ir": 15, "tr": 9.32, "nl": 0, "il": 0, "tl": null, "dn": -161, "di": -15, "dt": null},
+      {"cod": 270280, "mun": "Flexeiras", "nr": 158, "ir": 38, "tr": 24.05, "nl": 17, "il": 6, "tl": 35.29, "dn": -141, "di": -32, "dt": 11.24},
+      {"cod": 270360, "mun": "Japaratinga", "nr": 151, "ir": 32, "tr": 21.19, "nl": 0, "il": 0, "tl": null, "dn": -151, "di": -32, "dt": null},
+      {"cod": 270120, "mun": "Cacimbinhas", "nr": 151, "ir": 30, "tr": 19.87, "nl": 0, "il": 0, "tl": null, "dn": -151, "di": -30, "dt": null},
+      {"cod": 270580, "mun": "Olho d'Água do Casado", "nr": 149, "ir": 12, "tr": 8.05, "nl": 0, "il": 0, "tl": null, "dn": -149, "di": -12, "dt": null},
+      {"cod": 270110, "mun": "Branquinha", "nr": 149, "ir": 33, "tr": 22.15, "nl": 0, "il": 0, "tl": null, "dn": -149, "di": -33, "dt": null},
+      {"cod": 270810, "mun": "Santana do Mundaú", "nr": 146, "ir": 29, "tr": 19.86, "nl": 0, "il": 0, "tl": null, "dn": -146, "di": -29, "dt": null},
+      {"cod": 270250, "mun": "Dois Riachos", "nr": 144, "ir": 14, "tr": 9.72, "nl": 0, "il": 0, "tl": null, "dn": -144, "di": -14, "dt": null},
+      {"cod": 270740, "mun": "Porto de Pedras", "nr": 140, "ir": 32, "tr": 22.86, "nl": 0, "il": 0, "tl": null, "dn": -140, "di": -32, "dt": null},
+      {"cod": 270870, "mun": "São Miguel dos Milagres", "nr": 134, "ir": 33, "tr": 24.63, "nl": 0, "il": 0, "tl": null, "dn": -134, "di": -33, "dt": null},
+      {"cod": 270560, "mun": "Novo Lino", "nr": 133, "ir": 23, "tr": 17.29, "nl": 0, "il": 0, "tl": null, "dn": -133, "di": -23, "dt": null},
+      {"cod": 270375, "mun": "Jequiá da Praia", "nr": 126, "ir": 12, "tr": 9.52, "nl": 2, "il": 0, "tl": 0.0, "dn": -124, "di": -12, "dt": -9.52},
+      {"cod": 270060, "mun": "Barra de São Miguel", "nr": 125, "ir": 19, "tr": 15.2, "nl": 1, "il": 1, "tl": 100.0, "dn": -124, "di": -18, "dt": 84.8},
+      {"cod": 270150, "mun": "Campo Grande", "nr": 121, "ir": 32, "tr": 26.45, "nl": 0, "il": 0, "tl": null, "dn": -121, "di": -32, "dt": null},
+      {"cod": 270790, "mun": "Santa Luzia do Norte", "nr": 118, "ir": 16, "tr": 13.56, "nl": 1, "il": 1, "tl": 100.0, "dn": -117, "di": -15, "dt": 86.44},
+      {"cod": 270780, "mun": "Roteiro", "nr": 110, "ir": 18, "tr": 16.36, "nl": 1, "il": 0, "tl": 0.0, "dn": -109, "di": -18, "dt": -16.36},
+      {"cod": 270370, "mun": "Jaramataia", "nr": 101, "ir": 13, "tr": 12.87, "nl": 0, "il": 0, "tl": null, "dn": -101, "di": -13, "dt": null},
+      {"cod": 270090, "mun": "Belo Monte", "nr": 96, "ir": 13, "tr": 13.54, "nl": 0, "il": 0, "tl": null, "dn": -96, "di": -13, "dt": null},
+      {"cod": 270190, "mun": "Chã Preta", "nr": 93, "ir": 14, "tr": 15.05, "nl": 0, "il": 0, "tl": null, "dn": -93, "di": -14, "dt": null},
+      {"cod": 270135, "mun": "Campestre", "nr": 90, "ir": 25, "tr": 27.78, "nl": 0, "il": 0, "tl": null, "dn": -90, "di": -25, "dt": null},
+      {"cod": 270340, "mun": "Jacaré dos Homens", "nr": 85, "ir": 8, "tr": 9.41, "nl": 0, "il": 0, "tl": null, "dn": -85, "di": -8, "dt": null},
+      {"cod": 270660, "mun": "Paulo Jacinto", "nr": 80, "ir": 0, "tr": 0.0, "nl": 0, "il": 0, "tl": null, "dn": -80, "di": 0, "dt": null},
+      {"cod": 270820, "mun": "São Brás", "nr": 74, "ir": 12, "tr": 16.22, "nl": 3, "il": 1, "tl": 33.33, "dn": -71, "di": -11, "dt": 17.12},
+      {"cod": 270220, "mun": "Coqueiro Seco", "nr": 74, "ir": 16, "tr": 21.62, "nl": 0, "il": 0, "tl": null, "dn": -74, "di": -16, "dt": null},
+      {"cod": 270900, "mun": "Tanque d'Arca", "nr": 68, "ir": 16, "tr": 23.53, "nl": 0, "il": 0, "tl": null, "dn": -68, "di": -16, "dt": null},
+      {"cod": 270530, "mun": "Minador do Negrão", "nr": 66, "ir": 12, "tr": 18.18, "nl": 0, "il": 0, "tl": null, "dn": -66, "di": -12, "dt": null},
+      {"cod": 270620, "mun": "Palestina", "nr": 65, "ir": 6, "tr": 9.23, "nl": 0, "il": 0, "tl": null, "dn": -65, "di": -6, "dt": null},
+      {"cod": 270350, "mun": "Jacuípe", "nr": 62, "ir": 15, "tr": 24.19, "nl": 0, "il": 0, "tl": null, "dn": -62, "di": -15, "dt": null},
+      {"cod": 270270, "mun": "Feliz Deserto", "nr": 55, "ir": 7, "tr": 12.73, "nl": 0, "il": 0, "tl": null, "dn": -55, "di": -7, "dt": null},
+      {"cod": 270590, "mun": "Olho d'Água Grande", "nr": 52, "ir": 9, "tr": 17.31, "nl": 0, "il": 0, "tl": null, "dn": -52, "di": -9, "dt": null},
+      {"cod": 270080, "mun": "Belém", "nr": 51, "ir": 4, "tr": 7.84, "nl": 0, "il": 0, "tl": null, "dn": -51, "di": -4, "dt": null},
+      {"cod": 270390, "mun": "Jundiá", "nr": 48, "ir": 6, "tr": 12.5, "nl": 0, "il": 0, "tl": null, "dn": -48, "di": -6, "dt": null},
+      {"cod": 270490, "mun": "Mar Vermelho", "nr": 36, "ir": 7, "tr": 19.44, "nl": 0, "il": 0, "tl": null, "dn": -36, "di": -7, "dt": null},
+      {"cod": 270700, "mun": "Pindoba", "nr": 35, "ir": 3, "tr": 8.57, "nl": 1, "il": 0, "tl": 0.0, "dn": -34, "di": -3, "dt": -8.57}
+    ];
+
+    /* Dados dos 5 principais polos de parto para a secao Raio-X */
+    const POLOS = [
+      {
+        cod: 270430,
+        mun: "Maceió",
+        totalLocal: 19878,
+        inadLocal: 5259,
+        taxaLocal: 26.46,
+        resCount: 12850,
+        resInadPct: 30.46,
+        visCount: 7028,
+        visSharePct: 35.36,
+        visInadPct: 19.14,
+        taxaRealRes: 30.43
+      },
+      {
+        cod: 270030,
+        mun: "Arapiraca",
+        totalLocal: 6895,
+        inadLocal: 977,
+        taxaLocal: 14.17,
+        resCount: 3261,
+        resInadPct: 15.06,
+        visCount: 3634,
+        visSharePct: 52.70,
+        visInadPct: 13.37,
+        taxaRealRes: 14.77
+      },
+      {
+        cod: 270800,
+        mun: "Santana do Ipanema",
+        totalLocal: 4607,
+        inadLocal: 535,
+        taxaLocal: 11.61,
+        resCount: 838,
+        resInadPct: 12.29,
+        visCount: 3769,
+        visSharePct: 81.81,
+        visInadPct: 11.46,
+        taxaRealRes: 12.39
+      },
+      {
+        cod: 270630,
+        mun: "Palmeira dos Índios",
+        totalLocal: 2334,
+        inadLocal: 417,
+        taxaLocal: 17.87,
+        resCount: 935,
+        resInadPct: 20.32,
+        visCount: 1399,
+        visSharePct: 59.94,
+        visInadPct: 16.23,
+        taxaRealRes: 19.13
+      },
+      {
+        cod: 270730,
+        mun: "Porto Calvo",
+        totalLocal: 1754,
+        inadLocal: 312,
+        taxaLocal: 17.79,
+        resCount: 317,
+        resInadPct: 13.56,
+        visCount: 1437,
+        visSharePct: 81.93,
+        visInadPct: 18.72,
+        taxaRealRes: 13.26
+      }
+    ];
+
+    /* ==========================================================================
+       ESTADO DA APLICACAO
+       ========================================================================== */
+    let currentView = 'enganosa';   // 'enganosa' | 'corrigida' | 'lado'
+    let currentMetric = 'volume';   // 'volume' | 'taxa'
+    let hideLowDenom = false;       // ocultar nl < 50 quando metrica for taxa
+    let selectedCod = 270430;       // Maceio selecionado inicialmente no inspetor
+    let tableFilter = 'all';        // 'all' | 'polos' | 'zeros' | 'extreme'
+    let sortCol = 'nr';
+    let sortAsc = false;
+
+    /* ==========================================================================
+       UTILITARIOS DE FORMATACAO PT-BR E TRATAMENTO SEGURO DE NULOS
+       ========================================================================== */
+    function fmtInt(val) {
+      if (val === null || val === undefined || Number.isNaN(Number(val))) return '0';
+      return Math.round(Number(val)).toLocaleString('pt-BR');
+    }
+
+    function fmtPct(val) {
+      if (val === null || val === undefined || Number.isNaN(Number(val))) return null;
+      return Number(val).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
+    }
+
+    function fmtSignedInt(val) {
+      if (val === null || val === undefined || Number.isNaN(Number(val))) return null;
+      const n = Math.round(Number(val));
+      const sign = n > 0 ? '+' : '';
+      return sign + n.toLocaleString('pt-BR');
+    }
+
+    function fmtSignedPP(val) {
+      if (val === null || val === undefined || Number.isNaN(Number(val))) return null;
+      const n = Number(val);
+      const sign = n > 0 ? '+' : '';
+      return sign + n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' p.p.';
+    }
+
+    function normalizeSearch(text) {
+      return String(text || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    /* ==========================================================================
+       CONTROLES DE INTERFACE
+       ========================================================================== */
+    function setView(view) {
+      currentView = view;
+      document.getElementById('btnViewEnganosa').className = 'ctrl-btn' + (view === 'enganosa' ? ' active-red' : '');
+      document.getElementById('btnViewCorrigida').className = 'ctrl-btn' + (view === 'corrigida' ? ' active-blue' : '');
+      document.getElementById('btnViewLado').className = 'ctrl-btn' + (view === 'lado' ? ' active-dark' : '');
+      updateNoiseToggleVisibility();
+      renderCharts();
+    }
+
+    function setMetric(metric) {
+      currentMetric = metric;
+      document.getElementById('btnMetricVol').className = 'ctrl-btn' + (metric === 'volume' ? ' active-dark' : '');
+      document.getElementById('btnMetricTaxa').className = 'ctrl-btn' + (metric === 'taxa' ? ' active-dark' : '');
+      updateNoiseToggleVisibility();
+      renderCharts();
+    }
+
+    function toggleMinPartos(checked) {
+      hideLowDenom = Boolean(checked);
+      renderCharts();
+    }
+
+    function updateNoiseToggleVisibility() {
+      const wrap = document.getElementById('noiseFilterWrap');
+      const shouldShow = currentMetric === 'taxa' && (currentView === 'enganosa' || currentView === 'lado');
+      wrap.classList.toggle('visible', shouldShow);
+    }
+
+    function selectMunicipio(cod, scrollToInspector) {
+      selectedCod = cod;
+      renderCharts();
+      renderInspector();
+      renderTable();
+      if (scrollToInspector) {
+        const box = document.getElementById('inspectorBox');
+        if (box) box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    /* ==========================================================================
+       CONSTRUCAO DOS GRAFICOS EM CSS GRID / FLEXBOX
+       ========================================================================== */
+    function getTop12Enganosa() {
+      if (currentMetric === 'volume') {
+        return DATA
+          .filter(d => d.nl > 0)
+          .slice()
+          .sort((a, b) => b.il - a.il || b.nl - a.nl)
+          .slice(0, 12);
+      }
+      return DATA
+        .filter(d => d.tl !== null && (!hideLowDenom || d.nl >= 50))
+        .slice()
+        .sort((a, b) => b.tl - a.tl || b.il - a.il || b.nl - a.nl)
+        .slice(0, 12);
+    }
+
+    function getTop12Corrigida() {
+      if (currentMetric === 'volume') {
+        return DATA
+          .slice()
+          .sort((a, b) => b.ir - a.ir || b.nr - a.nr)
+          .slice(0, 12);
+      }
+      return DATA
+        .slice()
+        .sort((a, b) => b.tr - a.tr || b.ir - a.ir)
+        .slice(0, 12);
+    }
+
+    function updateExplainer() {
+      const el = document.getElementById('dynamicExplainer');
+      if (currentView === 'enganosa' && currentMetric === 'volume') {
+        el.className = 'dynamic-explainer';
+        el.innerHTML = '<strong>O que está distorcido (Volume Bruto por Local do Parto):</strong> Maternidades polo absorvem milhares de gestantes do interior, fazendo Maceió saltar para 5.259 casos e Santana do Ipanema assumir o 3º lugar estadual (535 casos). Ao mesmo tempo, cidades populosas sem maternidade própria como Rio Largo e 33 outros municípios desaparecem ou encolhem drasticamente.';
+      } else if (currentView === 'enganosa' && currentMetric === 'taxa') {
+        el.className = 'dynamic-explainer';
+        if (!hideLowDenom) {
+          el.innerHTML = '<strong>O que está distorcido (Taxa Percentual por Local do Parto):</strong> Cidades com pouquíssimos partos de urgência ou domiciliares explodem no topo do ranking, levando Estrela de Alagoas, Barra de São Miguel e Santa Luzia do Norte a 100,00% falsos com apenas 1 parto cada. Enquanto isso, 33 municípios ficam sem denominador e somem da análise.';
+        } else {
+          el.innerHTML = '<strong>O que está distorcido (Taxa Local com filtro de 50+ partos):</strong> Mesmo removendo o ruído extremo de cidades com menos de 50 partos, o local de nascimento segue enviesado: Cajueiro dispara para 52,25% (58/111) e Murici para 32,86% (23/70), enquanto Maceió cai artificialmente de 30,43% para 26,46% pela entrada de 7.028 visitantes.';
+        }
+      } else if (currentView === 'corrigida' && currentMetric === 'volume') {
+        el.className = 'dynamic-explainer mode-blue';
+        el.innerHTML = '<strong>Visão Corrigida (Volume Bruto por Residência da Mãe):</strong> Cada nascimento retorna ao município onde a gestante realmente mora e faz o pré-natal na atenção básica. Rio Largo (287 casos) e Marechal Deodoro (188 casos) recuperam sua visibilidade real, enquanto Santana do Ipanema volta de 535 para 109 casos.';
+      } else if (currentView === 'corrigida' && currentMetric === 'taxa') {
+        el.className = 'dynamic-explainer mode-blue';
+        el.innerHTML = '<strong>Visão Corrigida (Taxa Percentual por Residência da Mãe):</strong> Todos os 102 municípios entram na régua com seus denominadores reais de residentes, revelando o risco verdadeiro da rede básica: Cajueiro (34,05%), Barra de Santo Antônio (31,06%) e Maceió (30,43%) lideram sem distorções de fluxo hospitalar.';
+      } else if (currentView === 'lado' && currentMetric === 'volume') {
+        el.className = 'dynamic-explainer mode-compare';
+        el.innerHTML = '<strong>Comparação Lado a Lado (Volume Bruto):</strong> Na coluna vermelha (CODMUNNASC), polos regionais como Santana do Ipanema (535), Palmeira dos Índios (417) e Porto Calvo (312) dominam o topo ao absorver cidades vizinhas. Na coluna azul (CODMUNRES), o volume volta para os municípios de residência, recolocando Rio Largo em 3º lugar (287 casos).';
+      } else {
+        el.className = 'dynamic-explainer mode-compare';
+        if (!hideLowDenom) {
+          el.innerHTML = '<strong>Comparação Lado a Lado (Taxa Percentual %):</strong> Sem filtro de denominador, a coluna vermelha (CODMUNNASC) é tomada por taxas artificiais de 100% e 60% baseadas em 1 a 5 partos locais. Marque o filtro de 50+ partos acima para ver que, mesmo sem esses casos extremos, as taxas locais continuam distorcidas frente à residência (coluna azul).';
+        } else {
+          el.innerHTML = '<strong>Comparação Lado a Lado (Taxa Percentual %, filtro 50+ partos na esquerda):</strong> Na coluna vermelha (CODMUNNASC), Cajueiro salta de 34,05% para 52,25% e Maceió cai de 30,43% para 26,46%. Na coluna azul (CODMUNRES), os 102 municípios são comparados sem viés de maternidade, mostrando Cajueiro (34,05%) e Barra de Santo Antônio (31,06%) no topo real.';
+        }
+      }
+    }
+
+    function buildChartBox(mode, items, maxScale) {
+      const isRed = mode === 'enganosa';
+      const boxClass = isRed ? 'chart-box box-red' : 'chart-box box-blue';
+      const fillClass = isRed ? 'bar-fill fill-red' : 'bar-fill fill-blue';
+      const titleText = isRed
+        ? 'Visão Enganosa: Local do Parto (CODMUNNASC)'
+        : 'Visão Corrigida: Residência da Mãe (CODMUNRES)';
+      const badgeText = currentMetric === 'volume'
+        ? 'Top 12 por casos < 7'
+        : (isRed && hideLowDenom ? 'Top 12 taxa % (50+ partos)' : 'Top 12 por taxa %');
+      const badgeClass = isRed ? 'badge badge-red' : 'badge badge-blue';
+
+      const rowsHtml = items.map((d, idx) => {
+        const val = isRed
+          ? (currentMetric === 'volume' ? d.il : d.tl)
+          : (currentMetric === 'volume' ? d.ir : d.tr);
+        const pctWidth = maxScale > 0 ? Math.max(2, Math.min(100, (val / maxScale) * 100)) : 0;
+        const selectedClass = d.cod === selectedCod ? ' is-selected' : '';
+
+        let mainText = '';
+        let subText = '';
+        let lowDenomTag = '';
+
+        if (currentMetric === 'volume') {
+          const denom = isRed ? d.nl : d.nr;
+          mainText = fmtInt(val) + ' casos';
+          subText = fmtInt(denom) + ' nasc.';
+        } else {
+          const num = isRed ? d.il : d.ir;
+          const denom = isRed ? d.nl : d.nr;
+          mainText = fmtPct(val);
+          subText = fmtInt(num) + ' / ' + fmtInt(denom);
+          if (isRed && d.nl < 50) {
+            lowDenomTag = '<span class="bar-subtag">Apenas ' + fmtInt(d.nl) + (d.nl === 1 ? ' parto local' : ' partos locais') + '</span>';
+          }
+        }
+
+        return (
+          '<button type="button" class="bar-row' + selectedClass + '" onclick="selectMunicipio(' + d.cod + ', false)">' +
+            '<span class="bar-rank">' + (idx + 1) + 'º</span>' +
+            '<span class="bar-name-col">' +
+              '<span class="bar-name" title="' + escapeHtml(d.mun) + '">' + escapeHtml(d.mun) + '</span>' +
+              lowDenomTag +
+            '</span>' +
+            '<span class="bar-track">' +
+              '<span class="' + fillClass + '" style="display:block; width:' + pctWidth.toFixed(2) + '%;"></span>' +
+            '</span>' +
+            '<span class="bar-val-col">' +
+              '<span class="bar-val-main">' + mainText + '</span>' +
+              '<span class="bar-val-sub">' + subText + '</span>' +
+            '</span>' +
+          '</button>'
+        );
+      }).join('');
+
+      return (
+        '<div class="' + boxClass + '">' +
+          '<div class="chart-box-header">' +
+            '<h3 class="chart-box-title">' + titleText + '</h3>' +
+            '<span class="' + badgeClass + '">' + badgeText + '</span>' +
+          '</div>' +
+          '<div class="bar-list">' + rowsHtml + '</div>' +
+        '</div>'
+      );
+    }
+
+    function renderCharts() {
+      updateExplainer();
+      const stage = document.getElementById('chartsStage');
+
+      if (currentView === 'lado') {
+        stage.className = 'charts-stage two-cols';
+        const engItems = getTop12Enganosa();
+        const corItems = getTop12Corrigida();
+
+        let sharedMax = 100;
+        if (currentMetric === 'volume') {
+          const maxEng = engItems.length ? engItems[0].il : 1;
+          const maxCor = corItems.length ? corItems[0].ir : 1;
+          sharedMax = Math.max(maxEng, maxCor);
+        } else {
+          const maxEng = engItems.length ? engItems[0].tl : 100;
+          const maxCor = corItems.length ? corItems[0].tr : 100;
+          sharedMax = Math.max(maxEng, maxCor);
+        }
+
+        stage.innerHTML = buildChartBox('enganosa', engItems, sharedMax) + buildChartBox('corrigida', corItems, sharedMax);
+      } else {
+        stage.className = 'charts-stage';
+        const items = currentView === 'enganosa' ? getTop12Enganosa() : getTop12Corrigida();
+        let maxScale = 100;
+        if (currentMetric === 'volume') {
+          maxScale = items.length ? (currentView === 'enganosa' ? items[0].il : items[0].ir) : 1;
+        } else {
+          maxScale = items.length ? (currentView === 'enganosa' ? items[0].tl : items[0].tr) : 100;
+        }
+        stage.innerHTML = buildChartBox(currentView, items, maxScale);
+      }
+    }
+
+    /* ==========================================================================
+       INSPETOR RAPIDO DO MUNICIPIO SELECIONADO
+       ========================================================================== */
+    function renderInspector() {
+      const m = DATA.find(d => d.cod === selectedCod) || DATA[0];
+      const box = document.getElementById('inspectorBox');
+
+      let statusBadge = '';
+      if (m.dn > 0) {
+        statusBadge = '<span class="badge badge-blue">Polo receptor de partos (' + fmtSignedInt(m.dn) + ' no saldo)</span>';
+      } else if (m.nl === 0) {
+        statusBadge = '<span class="badge badge-gray">Evasão total: 0 partos ocorridos no município</span>';
+      } else if (m.nl < 50 && m.tl !== null && m.tl >= 40) {
+        statusBadge = '<span class="badge badge-red">Evasão com distorção extrema de taxa (' + fmtInt(m.nl) + ' partos locais)</span>';
+      } else {
+        statusBadge = '<span class="badge badge-amber">Município emissor de gestantes (' + fmtSignedInt(m.dn) + ' no saldo)</span>';
+      }
+
+      const localTaxaDisplay = m.tl === null
+        ? '<span class="badge badge-gray">Sem partos</span>'
+        : '<strong class="txt-red">' + fmtPct(m.tl) + '</strong>';
+
+      const diffTaxaDisplay = m.dt === null
+        ? '<span class="badge badge-gray">Sem partos</span>'
+        : '<strong class="' + (m.dt > 0 ? 'txt-red' : 'txt-blue') + '">' + fmtSignedPP(m.dt) + '</strong>';
+
+      const diffVolClass = m.dn > 0 ? 'txt-green' : 'txt-red';
+
+      box.innerHTML =
+        '<div class="inspector-head">' +
+          '<div class="inspector-title">' +
+            '<span>Inspetor Rápido: ' + escapeHtml(m.mun) + '</span>' +
+            '<span class="badge badge-gray">IBGE ' + m.cod + '</span>' +
+          '</div>' +
+          statusBadge +
+        '</div>' +
+        '<div class="inspector-grid">' +
+          '<div class="insp-col col-blue">' +
+            '<div class="insp-col-title">Residência da Mãe (CODMUNRES: Real)</div>' +
+            '<div class="insp-metric-row"><span>Nascimentos válidos:</span><strong>' + fmtInt(m.nr) + '</strong></div>' +
+            '<div class="insp-metric-row"><span>Casos inadequados (&lt;7):</span><strong>' + fmtInt(m.ir) + '</strong></div>' +
+            '<div class="insp-metric-row"><span>Taxa real de inadequação:</span><strong class="txt-blue">' + fmtPct(m.tr) + '</strong></div>' +
+          '</div>' +
+          '<div class="insp-col col-red">' +
+            '<div class="insp-col-title">Local do Parto (CODMUNNASC: Enganoso)</div>' +
+            '<div class="insp-metric-row"><span>Nascimentos ocorridos no local:</span><strong>' + (m.nl === 0 ? '<span class="badge badge-gray">0 partos</span>' : fmtInt(m.nl)) + '</strong></div>' +
+            '<div class="insp-metric-row"><span>Casos inadequados no local:</span><strong>' + fmtInt(m.il) + '</strong></div>' +
+            '<div class="insp-metric-row"><span>Taxa aparente no local:</span>' + localTaxaDisplay + '</div>' +
+          '</div>' +
+          '<div class="insp-col col-delta">' +
+            '<div class="insp-col-title">Impacto da Distorção (Local menos Residência)</div>' +
+            '<div class="insp-metric-row"><span>Diferença de nascimentos:</span><strong class="' + diffVolClass + '">' + fmtSignedInt(m.dn) + '</strong></div>' +
+            '<div class="insp-metric-row"><span>Diferença de casos (&lt;7):</span><strong class="' + (m.di > 0 ? 'txt-red' : 'txt-blue') + '">' + fmtSignedInt(m.di) + '</strong></div>' +
+            '<div class="insp-metric-row"><span>Diferença na taxa (p.p.):</span>' + diffTaxaDisplay + '</div>' +
+          '</div>' +
+        '</div>';
+    }
+
+    /* ==========================================================================
+       4. RENDERIZACAO DOS 5 POLOS DE PARTO
+       ========================================================================== */
+    function renderPolos() {
+      const grid = document.getElementById('polosGrid');
+      grid.innerHTML = POLOS.map(p => {
+        const resSharePct = Number((100 - p.visSharePct).toFixed(2));
+        return (
+          '<article class="polo-card" onclick="selectMunicipio(' + p.cod + ', true)" title="Clique para inspecionar ' + escapeHtml(p.mun) + '">' +
+            '<div>' +
+              '<h3 class="polo-name">' + escapeHtml(p.mun) + '</h3>' +
+              '<div class="polo-total">' + fmtInt(p.totalLocal) + ' partos locais (' + fmtInt(p.inadLocal) + ' inad., ' + fmtPct(p.taxaLocal) + ')</div>' +
+            '</div>' +
+            '<div class="stacked-track" role="img" aria-label="Proporção de residentes e visitantes em ' + escapeHtml(p.mun) + '">' +
+              '<div class="stacked-res" style="width:' + resSharePct + '%;">' + (resSharePct >= 18 ? Math.round(resSharePct) + '%' : '') + '</div>' +
+              '<div class="stacked-vis" style="width:' + p.visSharePct + '%;">' + (p.visSharePct >= 18 ? Math.round(p.visSharePct) + '%' : '') + '</div>' +
+            '</div>' +
+            '<div class="polo-stats">' +
+              '<div class="polo-stat-line"><span>Residentes:</span><strong>' + fmtInt(p.resCount) + ' (' + fmtPct(p.resInadPct) + ' inad.)</strong></div>' +
+              '<div class="polo-stat-line"><span>Visitantes (' + fmtPct(p.visSharePct) + '):</span><strong class="txt-red">' + fmtInt(p.visCount) + ' (' + fmtPct(p.visInadPct) + ' inad.)</strong></div>' +
+            '</div>' +
+            '<div class="polo-real-box">' +
+              '<span>Taxa real (CODMUNRES):</span>' +
+              '<span>' + fmtPct(p.taxaRealRes) + '</span>' +
+            '</div>' +
+          '</article>'
+        );
+      }).join('');
+    }
+
+    /* ==========================================================================
+       5. TABELA COMPLETA, BUSCA SEM ACENTOS E ORDENACAO COM NULOS AO FINAL
+       ========================================================================== */
+    function setTableFilter(filterKey, btnEl) {
+      tableFilter = filterKey;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      renderTable();
+    }
+
+    function sortTable(col) {
+      if (sortCol === col) {
+        sortAsc = !sortAsc;
+      } else {
+        sortCol = col;
+        sortAsc = (col === 'mun');
+      }
+      renderTable();
+    }
+
+    function renderTable() {
+      const q = normalizeSearch(document.getElementById('searchInput').value.trim());
+
+      const filtered = DATA.filter(d => {
+        if (q) {
+          const matchName = normalizeSearch(d.mun).includes(q);
+          const matchCod = String(d.cod).includes(q);
+          if (!matchName && !matchCod) return false;
+        }
+        if (tableFilter === 'polos') return d.dn > 0;
+        if (tableFilter === 'zeros') return d.nl === 0;
+        if (tableFilter === 'extreme') return d.tl !== null && d.tl >= 40;
+        return true;
+      });
+
+      /* Ordenacao rigorosa: valores null ficam SEMPRE no final (asc ou desc) */
+      filtered.sort((a, b) => {
+        const va = a[sortCol];
+        const vb = b[sortCol];
+
+        const aNull = (va === null || va === undefined);
+        const bNull = (vb === null || vb === undefined);
+        if (aNull && bNull) return a.mun.localeCompare(b.mun, 'pt-BR');
+        if (aNull) return 1;
+        if (bNull) return -1;
+
+        if (typeof va === 'string') {
+          const cmp = va.localeCompare(vb, 'pt-BR');
+          return sortAsc ? cmp : -cmp;
+        }
+
+        if (va === vb) return a.mun.localeCompare(b.mun, 'pt-BR');
+        return sortAsc ? (va - vb) : (vb - va);
+      });
+
+      /* Atualiza setas visuais de ordenacao */
+      const cols = ['mun', 'nr', 'ir', 'tr', 'nl', 'il', 'tl', 'dn', 'dt'];
+      cols.forEach(c => {
+        const el = document.getElementById('arrow-' + c);
+        if (el) el.textContent = (sortCol === c) ? (sortAsc ? '▲' : '▼') : '';
+      });
+
+      const tbody = document.getElementById('tableBody');
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:24px; color:#64748b;">Nenhum município encontrado para o filtro atual.</td></tr>';
+      } else {
+        tbody.innerHTML = filtered.map(d => {
+          const rowClasses = [];
+          if (d.nl === 0) rowClasses.push('row-zero');
+          if (d.cod === selectedCod) rowClasses.push('row-selected');
+
+          const nlCell = d.nl === 0
+            ? '<span class="badge badge-gray">0 partos</span>'
+            : fmtInt(d.nl);
+
+          const ilCell = d.nl === 0
+            ? '<span class="txt-muted">0</span>'
+            : '<span class="txt-red">' + fmtInt(d.il) + '</span>';
+
+          const tlCell = d.tl === null
+            ? '<span class="badge badge-gray">Sem partos</span>'
+            : '<span class="txt-red">' + fmtPct(d.tl) + '</span>';
+
+          const dnClass = d.dn > 0 ? 'txt-green' : (d.dn < 0 ? 'txt-red' : 'txt-muted');
+          const dtCell = d.dt === null
+            ? '<span class="badge badge-gray">Sem partos</span>'
+            : '<span class="' + (d.dt > 0 ? 'txt-red' : 'txt-blue') + '">' + fmtSignedPP(d.dt) + '</span>';
+
+          return (
+            '<tr class="' + rowClasses.join(' ') + '" onclick="selectMunicipio(' + d.cod + ', true)">' +
+              '<td><strong>' + escapeHtml(d.mun) + '</strong> <span class="txt-muted">(' + d.cod + ')</span></td>' +
+              '<td class="num">' + fmtInt(d.nr) + '</td>' +
+              '<td class="num txt-blue">' + fmtInt(d.ir) + '</td>' +
+              '<td class="num txt-blue">' + fmtPct(d.tr) + '</td>' +
+              '<td class="num">' + nlCell + '</td>' +
+              '<td class="num">' + ilCell + '</td>' +
+              '<td class="num">' + tlCell + '</td>' +
+              '<td class="num ' + dnClass + '">' + fmtSignedInt(d.dn) + '</td>' +
+              '<td class="num">' + dtCell + '</td>' +
+            '</tr>'
+          );
+        }).join('');
+      }
+
+      document.getElementById('tableCount').textContent = 'Exibindo ' + fmtInt(filtered.length) + ' de ' + fmtInt(DATA.length) + ' municípios.';
+    }
+
+    /* ==========================================================================
+       INICIALIZACAO
+       ========================================================================== */
+    function init() {
+      const extremeCount = DATA.filter(d => d.tl !== null && d.tl >= 40).length;
+      const btnExt = document.getElementById('btnFilterExtreme');
+      if (btnExt) {
+        btnExt.textContent = 'Taxa local >= 40% (distorção extrema: ' + extremeCount + ')';
+      }
+
+      updateNoiseToggleVisibility();
+      renderCharts();
+      renderInspector();
+      renderPolos();
+      renderTable();
+    }
+
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
