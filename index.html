@@ -455,7 +455,15 @@
           </ul>
           <p class="capa-docente"><strong>Docente:</strong> Profª Cristina Tenório</p>
         </div>
-        <button type="button" id="capaIniciar" class="capa-iniciar">Iniciar apresentação <span aria-hidden="true">→</span></button>
+        <div class="capa-acoes">
+          <button type="button" id="capaIniciar" class="capa-iniciar">Iniciar apresentação <span aria-hidden="true">→</span></button>
+          <button type="button" id="capaTelaCheia" class="capa-tela-cheia">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4h4M20 8V4h-4M4 16v4h4M20 16v4h-4" />
+            </svg>
+            <span>Tela cheia</span>
+          </button>
+        </div>
       </div>
       <aside class="capa-resumo" aria-label="Escopo do estudo">
         <h2>Escopo do estudo</h2>
@@ -4030,6 +4038,8 @@
 
       // Modo Tela Cheia com tratamento seguro de erro
       const btnFs = document.getElementById('btnFullscreen');
+      const btnCapaFs = document.getElementById('capaTelaCheia');
+      const txtCapaFs = btnCapaFs.querySelector('span');
       const txtFs = document.getElementById('txtFullscreen');
       const iconEnter = document.getElementById('iconFsEnter');
       const iconExit = document.getElementById('iconFsExit');
@@ -4037,14 +4047,16 @@
       function updateFsButton() {
         const isFs = Boolean(document.fullscreenElement);
         document.body.classList.toggle('presentation-mode', isFs);
-        txtFs.textContent = isFs ? 'Sair da tela cheia' : 'Tela cheia';
+        const rotulo = isFs ? 'Sair da tela cheia' : 'Tela cheia';
+        txtFs.textContent = rotulo;
+        txtCapaFs.textContent = rotulo;
         btnFs.title = isFs ? 'Sair da tela cheia' : 'Modo tela cheia';
         btnFs.setAttribute('aria-label', btnFs.title);
         iconEnter.classList.toggle('hidden', isFs);
         iconExit.classList.toggle('hidden', !isFs);
       }
 
-      btnFs.addEventListener('click', async () => {
+      async function alternarTelaCheia() {
         try {
           if (!document.fullscreenElement) {
             await document.documentElement.requestFullscreen();
@@ -4054,8 +4066,10 @@
         } catch (err) {
           showToast('Para projeção em tela cheia neste navegador, pressione F11 ou abra o arquivo HTML diretamente.');
         }
-      });
+      }
 
+      btnFs.addEventListener('click', alternarTelaCheia);
+      btnCapaFs.addEventListener('click', alternarTelaCheia);
       document.addEventListener('fullscreenchange', updateFsButton);
     }
 
