@@ -544,8 +544,6 @@ body.apresentacao {
   color: #e2edf7;
 }
 .capa-tela-cheia:hover, .capa-tela-cheia:focus-visible { background: #ffffff20; color: #fff; }
-.capa-tela-sair, .presentation-mode .capa-tela-entrar { display: none; }
-.presentation-mode .capa-tela-sair { display: inline; }
 .capa-iniciar {
   display: inline-flex;
   align-items: center;

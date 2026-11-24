@@ -104,7 +104,7 @@ body.apresentacao {
 }
 .cabecalho-acoes button:hover { background: #ffffff22; }
 .cabecalho-acoes button svg { width: 1rem; height: 1rem; }
-.presentation-mode #btnResetGlobal, .presentation-mode #txtFullscreen { display: none; }
+.presentation-mode :is(#btnResetGlobal, #btnFullscreen, #capaTelaCheia) { display: none; }
 
 .apresentacao #roteiro.roteiro {
   position: static;

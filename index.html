@@ -272,7 +272,7 @@
       .analise-coluna-rotulo { font-size: .65rem; padding: 0 .08rem; }
     }
   </style>
-  <link href="Recursos/visual.css" rel="stylesheet">
+  <link href="Recursos/visual.css?v=tela-cheia" rel="stylesheet">
   <link href="Recursos/layout.css" rel="stylesheet">
   <link href="Recursos/editorial.css" rel="stylesheet">
 </head>
@@ -298,13 +298,10 @@
         </button>
         <button id="btnFiltrosTerritoriais" type="button" popovertarget="filtrosTerritoriais" title="Filtros e busca">Filtros e busca</button>
         <button id="btnFullscreen" type="button" title="Modo tela cheia" aria-label="Modo tela cheia">
-          <svg id="iconFsEnter" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4h4M20 8V4h-4M4 16v4h4M20 16v4h-4" />
           </svg>
-          <svg id="iconFsExit" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 9H4V4m11 5h5V4M9 15H4v5m11-5h5v5" />
-          </svg>
-          <span id="txtFullscreen">Tela cheia</span>
+          <span>Tela cheia</span>
         </button>
       </div>
     </div>
@@ -439,8 +436,7 @@
       <div class="capa-principal">
         <button type="button" id="capaTelaCheia" class="capa-tela-cheia" title="Tela cheia">
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path class="capa-tela-entrar" stroke-linecap="round" stroke-linejoin="round" d="M4 8V4h4M20 8V4h-4M4 16v4h4M20 16v4h-4" />
-            <path class="capa-tela-sair" stroke-linecap="round" stroke-linejoin="round" d="M9 9H4V4m11 5h5V4M9 15H4v5m11-5h5v5" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4h4M20 8V4h-4M4 16v4h4M20 16v4h-4" />
           </svg>
           <span class="sr-only">Tela cheia</span>
         </button>
@@ -4038,39 +4034,20 @@
       // Modo Tela Cheia com tratamento seguro de erro
       const btnFs = document.getElementById('btnFullscreen');
       const btnCapaFs = document.getElementById('capaTelaCheia');
-      const txtCapaFs = btnCapaFs.querySelector('span');
-      const txtFs = document.getElementById('txtFullscreen');
-      const iconEnter = document.getElementById('iconFsEnter');
-      const iconExit = document.getElementById('iconFsExit');
 
-      function updateFsButton() {
-        const isFs = Boolean(document.fullscreenElement);
-        document.body.classList.toggle('presentation-mode', isFs);
-        const rotulo = isFs ? 'Sair da tela cheia' : 'Tela cheia';
-        txtFs.textContent = rotulo;
-        txtCapaFs.textContent = rotulo;
-        btnCapaFs.title = rotulo;
-        btnFs.title = isFs ? 'Sair da tela cheia' : 'Modo tela cheia';
-        btnFs.setAttribute('aria-label', btnFs.title);
-        iconEnter.classList.toggle('hidden', isFs);
-        iconExit.classList.toggle('hidden', !isFs);
-      }
-
-      async function alternarTelaCheia() {
+      async function ativarTelaCheia() {
         try {
-          if (!document.fullscreenElement) {
-            await document.documentElement.requestFullscreen();
-          } else {
-            await document.exitFullscreen();
-          }
+          await document.documentElement.requestFullscreen();
         } catch (err) {
           showToast('Para projeção em tela cheia neste navegador, pressione F11 ou abra o arquivo HTML diretamente.');
         }
       }
 
-      btnFs.addEventListener('click', alternarTelaCheia);
-      btnCapaFs.addEventListener('click', alternarTelaCheia);
-      document.addEventListener('fullscreenchange', updateFsButton);
+      btnFs.addEventListener('click', ativarTelaCheia);
+      btnCapaFs.addEventListener('click', ativarTelaCheia);
+      document.addEventListener('fullscreenchange', () => {
+        document.body.classList.toggle('presentation-mode', Boolean(document.fullscreenElement));
+      });
     }
 
     // =========================================================================
