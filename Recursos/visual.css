@@ -1,0 +1,372 @@
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("ibm-plex-sans.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("ibm-plex-mono.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("ibm-plex-mono-semibold.woff2") format("woff2");
+  font-weight: 600 700;
+  font-display: swap;
+}
+
+body.apresentacao {
+  --ufal: #003366;
+  --acento: #0077c8;
+  --risco: #c8102e;
+  --linha: #cbd5e1;
+  --fundo: #f8fafc;
+  --texto: #0f172a;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --margem: clamp(.75rem, 3vw, 2.75rem);
+  --largura: 96rem;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
+  overflow: hidden;
+  color: var(--texto);
+  background: var(--fundo);
+  font-family: var(--sans);
+  font-variant-numeric: tabular-nums;
+}
+.apresentacao .font-mono, .apresentacao .metadados-projeto,
+.apresentacao .roteiro-passo-numero, .apresentacao .analise-coluna-preenchimento b,
+.apresentacao .analise-colunas-eixo, .apresentacao .numero-projecao,
+.apresentacao .linha-temporal strong, .apresentacao td[data-numero] {
+  font-family: var(--mono);
+}
+.conteudo-largo {
+  width: min(100%, var(--largura));
+  margin-inline: auto;
+  padding-inline: var(--margem);
+}
+.cabecalho-projecao {
+  color: white;
+  background: var(--ufal);
+  border-bottom: 3px solid var(--acento);
+}
+.cabecalho-projecao > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: .72rem;
+}
+.metadados-projeto {
+  color: #e0f2fe;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+.cabecalho-projecao h1 {
+  font-size: clamp(1.16rem, 2.3vw, 1.8rem);
+  font-weight: 600;
+  letter-spacing: -.035em;
+  line-height: 1.13;
+  margin-top: .2rem;
+}
+.cabecalho-acoes, .marcas-projecao {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.cabecalho-acoes { gap: .65rem; }
+.marcas-projecao {
+  gap: 16px;
+  padding-right: 16px;
+  border-right: 1px solid #ffffff52;
+}
+.marcas-projecao img { width: auto; height: 2.25rem; object-fit: contain; }
+.marcas-projecao img[alt="Instituto de Computação"] { filter: grayscale(1) brightness(1.45); height: 2rem; }
+.cabecalho-acoes button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  min-height: 2.15rem;
+  border: 1px solid #ffffff60;
+  border-radius: 4px;
+  padding: .32rem .62rem;
+  font-size: .8rem;
+  font-weight: 600;
+}
+.cabecalho-acoes button:hover { background: #ffffff22; }
+.cabecalho-acoes button svg { width: 1rem; height: 1rem; }
+.presentation-mode #btnResetGlobal, .presentation-mode #txtFullscreen { display: none; }
+
+.apresentacao #roteiro.roteiro {
+  position: static;
+  background: #fff;
+  border: 0;
+  border-bottom: 1px solid var(--linha);
+  border-radius: 0;
+}
+.apresentacao .roteiro-menu {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  padding-block: .25rem;
+  border-radius: 0;
+}
+.apresentacao .roteiro-item + .roteiro-item { border-left: 1px solid var(--linha); }
+.apresentacao .roteiro-menu .capitulo-btn {
+  min-height: 2.35rem;
+  padding: .38rem .28rem;
+  border-radius: 3px;
+  text-align: center;
+  color: var(--ufal);
+  font-size: .91rem;
+  font-weight: 600;
+}
+.apresentacao .roteiro-menu .capitulo-btn[aria-current="true"] { background: var(--ufal); color: #fff; }
+.apresentacao :is(button, summary):focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: -2px;
+}
+
+#palco { overflow: clip; min-width: 0; min-height: 0; }
+#quadro {
+  position: relative;
+  display: flow-root;
+  padding-block: clamp(.5rem, 1.6vh, 1.15rem);
+  transform: scale(var(--escala-quadro, 1));
+  transform-origin: top center;
+}
+.apresentacao #quadro [class*="shadow"] { box-shadow: none; }
+.apresentacao #quadro :is(.rounded-2xl, .rounded-xl, .rounded-lg, .rounded-full) { border-radius: 5px; }
+.apresentacao #quadro :is([class*="border-[#CBD5E1]"], .perfil-guia, .modelo-comparativo > div) { border-color: var(--linha); }
+.apresentacao #quadro :is(h2, h3, h4) { letter-spacing: -.018em; }
+.apresentacao #quadro .capitulo :is(h2, h3):not(.text-white) { font-weight: 650; }
+.apresentacao #quadro .grade-indicadores { gap: 0; }
+.apresentacao #quadro .grade-indicadores > div {
+  padding: .25rem .85rem;
+  background: transparent;
+  border: 0;
+  border-left: 1px solid var(--linha);
+  border-radius: 0;
+}
+.apresentacao #quadro .grade-indicadores > div:first-child { padding-left: 0; border-left: 0; }
+.apresentacao #quadro .analise-coluna-preenchimento { border-radius: 3px 3px 0 0; }
+.apresentacao #quadro .analise-coluna-preenchimento.prevista { background: var(--acento); }
+.apresentacao #quadro .analise-coluna-preenchimento.observada { background: var(--risco); }
+.apresentacao #quadro .analise-coluna-destaque .analise-coluna-preenchimento { background: var(--ufal); }
+.apresentacao #quadro .analise-coluna-preenchimento.neutra { background: #687b8d; }
+.apresentacao #quadro .analise-coluna-rotulo, .apresentacao #quadro .perfil-guia p { color: #334155; }
+#escolaridade [data-passo] img { max-height: 57dvh; object-fit: contain; }
+#mapaAlagoas { max-height: 47dvh; }
+#quadro #xrayPanel:not(.hidden) {
+  position: absolute;
+  z-index: 45;
+  inset: auto var(--margem) .75rem;
+  background: #fff;
+  box-shadow: 0 0 0 1px #003366;
+}
+#quadro [data-passo="qualidade-origem"], #quadro [data-passo="qualidade-sensibilidade"] {
+  --altura-tabela: clamp(10rem, 38dvh, 21rem);
+}
+#quadro [data-passo="qualidade-origem"] .overflow-x-auto,
+#quadro [data-passo="qualidade-sensibilidade"] .overflow-x-auto,
+#quadro [data-passo="verificacao-grupos"] details .overflow-x-auto {
+  max-height: var(--altura-tabela, min(32dvh, 17rem));
+  overflow: auto;
+}
+#quadro #painelTerritorial #tab4 .overflow-x-auto { max-height: min(43dvh, 26rem); }
+#quadro .perfil-ignorados-graficos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: .8rem;
+}
+#quadro .perfil-ignorados-graficos:has(#ignAtraso:not([hidden])) {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+}
+#quadro .perfil-ignorados-graficos > div:first-child { height: clamp(12rem, 42dvh, 23rem); }
+
+.fichas-metricas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: .6rem;
+}
+.fichas-metricas > div { min-width: 0; padding: .15rem 1rem; }
+.fichas-metricas > div:first-child { padding-left: 0; }
+.fichas-metricas > div + div { border-left: 1px solid var(--linha); }
+.fichas-metricas dt { color: var(--ufal); font-weight: 600; }
+.fichas-metricas dd { color: #334155; font-size: .92rem; line-height: 1.35; }
+.fichas-metricas .nomes-metricas { display: block; margin: .18rem 0; color: var(--texto); font-weight: 600; }
+.amostra-treino {
+  margin-top: .8rem;
+  padding-top: .65rem;
+  border-top: 1px solid var(--linha);
+}
+.amostra-treino h4 { color: var(--ufal); font-weight: 600; }
+.amostra-treino p { color: #334155; font-size: .86rem; }
+.amostra-treino figure { margin-top: .6rem; max-width: 56rem; }
+.amostra-barra {
+  display: flex;
+  height: 1.15rem;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--linha);
+}
+.amostra-barra span { flex: 0 0 21.09%; background: var(--risco); }
+.amostra-rotulos {
+  margin-top: .4rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .28rem .75rem;
+}
+.amostra-rotulos div { font-size: .83rem; color: #334155; }
+.amostra-rotulos strong { color: var(--texto); font-weight: 600; }
+.amostra-rotulos div::before {
+  display: inline-block;
+  width: .55rem;
+  height: .55rem;
+  margin-right: .35rem;
+  background: var(--linha);
+  content: "";
+}
+.amostra-rotulos div:first-child::before { background: var(--risco); }
+
+.rodape-projecao { background: #fff; border-top: 1px solid var(--linha); }
+.rodape-projecao > div {
+  min-height: 2.8rem;
+  display: grid;
+  grid-template-columns: minmax(10rem, 1fr) minmax(8rem, 18rem) auto;
+  align-items: center;
+  gap: .85rem;
+}
+.roteiro-etapa-atual {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  gap: .55rem;
+  color: var(--ufal);
+}
+.roteiro-passo-numero { color: #475569; font-size: .76rem; white-space: nowrap; }
+.roteiro-passo-nome {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: .9rem;
+  font-weight: 600;
+}
+.apresentacao .roteiro-passos { display: flex; flex-wrap: nowrap; gap: .16rem; }
+.apresentacao .roteiro-passos button {
+  flex: 1;
+  padding: 0;
+  min-height: 1.6rem;
+  border-radius: 3px;
+  background: transparent;
+}
+.apresentacao .roteiro-passos button::after {
+  content: "";
+  display: block;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--linha);
+}
+.apresentacao .roteiro-passos button[aria-current="step"]::after,
+.apresentacao .roteiro-passos button:hover::after { background: var(--acento); }
+.apresentacao .roteiro-setas { gap: .3rem; }
+.apresentacao .roteiro-setas button { width: 2rem; height: 1.8rem; border-color: var(--linha); border-radius: 4px; color: var(--ufal); }
+.projecao-fontes {
+  border-top: 1px solid #e2e8f0;
+  color: #475569;
+  text-align: right;
+  font-size: .69rem;
+  padding-block: .15rem;
+}
+
+#quadro .limite-filtros { padding-block: .45rem; }
+#quadro #painelTerritorial .tab-panel .grafico-territorial {
+  height: clamp(14rem, 43dvh, 29rem);
+}
+#quadro #painelTerritorial #tab1 .grafico-territorial { height: clamp(13rem, 35dvh, 25rem); }
+#quadro #painelTerritorial #tab3 .grafico-microrregioes { height: clamp(19rem, 50dvh, 31rem); }
+#quadro #tab3 > div { display: block; padding: 0; }
+#painelTerritorial[data-visao="regioes"] #tab3 > div > :nth-child(2),
+#painelTerritorial[data-visao="regioes-indicadores"] #tab3 > div > :first-child {
+  display: none;
+}
+#quadro #painelTerritorial .tab-panel > div,
+#quadro [data-passo^="qualidade-"] > div > [class*="xl:col-span-"] {
+  padding: clamp(.65rem, 1.55vw, 1.15rem);
+}
+#quadro #painelTerritorial :is(#tab1Banner, #tab1 .border-b, #tab2 .border-b) {
+  padding-block: .48rem;
+}
+#quadro #painelTerritorial .tab-panel [class*="space-y-4"] > :not([hidden]) ~ :not([hidden]) {
+  margin-top: .55rem;
+}
+#quadro [data-passo="verificacao-grupos"] .analise-colunas-dados { --altura-grafico: min(27dvh, 9.25rem); }
+#quadro [data-passo="verificacao-grupos"] .analise-colunas-eixo { height: min(27dvh, 9.25rem); }
+#quadro [data-passo="verificacao-grupos"] .perfis-conteudo {
+  max-height: min(38dvh, 21rem);
+  overflow: auto;
+}
+@media (min-width: 850px) {
+  #quadro :is([data-passo="qualidade-origem"], [data-passo="qualidade-sensibilidade"]) > div {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: .85rem;
+  }
+  #quadro [data-passo="qualidade-origem"] > div > :first-child { grid-column: span 7; }
+  #quadro [data-passo="qualidade-origem"] > div > :nth-child(2) { grid-column: span 5; }
+  #quadro [data-passo="qualidade-sensibilidade"] > div > div { grid-column: span 6; }
+  #quadro #painelTerritorial[data-visao="regioes-indicadores"] #tab3 > div > :nth-child(2) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: .85rem;
+  }
+  #quadro #painelTerritorial[data-visao="regioes-indicadores"] #tab3 > div > :nth-child(2) > div {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 749px) {
+  .apresentacao #quadro .grade-indicadores > div {
+    padding: .5rem 0;
+    border-left: 0;
+    border-bottom: 1px solid var(--linha);
+  }
+  .apresentacao #quadro .grade-indicadores > div:last-child { border-bottom: 0; }
+  .fichas-metricas > div { padding-inline: .5rem; }
+  .fichas-metricas dd { font-size: .82rem; }
+  .cabecalho-projecao > div { gap: .55rem; }
+  .cabecalho-acoes, .marcas-projecao { gap: .55rem; }
+  .marcas-projecao { padding-right: .55rem; }
+  .marcas-projecao img { height: 1.7rem; }
+  .marcas-projecao img[alt="Instituto de Computação"] { height: 1.5rem; }
+  .cabecalho-acoes button { min-height: 1.75rem; padding: .28rem; }
+  .cabecalho-acoes button span { display: none; }
+  .metadados-projeto { font-size: .57rem; }
+  .metadados-projeto .origem-dados { display: none; }
+  .apresentacao .roteiro-menu .capitulo-btn { font-size: .72rem; min-height: 2.1rem; }
+  .rodape-projecao > div { grid-template-columns: minmax(0, 1fr) auto; gap: .12rem .5rem; padding-block: .25rem; }
+  .apresentacao .roteiro-passos { grid-column: 1 / -1; grid-row: 2; }
+  .apresentacao .roteiro-passos button { min-height: 1rem; }
+  .projecao-fontes { text-align: left; font-size: .62rem; }
+}
+@media (max-width: 680px), (max-height: 440px) {
+  #palco { overflow: auto; }
+  #quadro { transform: none; }
+  #quadro #xrayPanel:not(.hidden) { position: static; }
+  #quadro .perfil-ignorados-graficos:has(#ignAtraso:not([hidden])) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .apresentacao #quadro * { animation-duration: 0s; }
+}

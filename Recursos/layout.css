@@ -1,0 +1,213 @@
+.apresentacao {
+  --espaco-paineis: 12px;
+  --raio-painel: 5px;
+}
+.apresentacao .cabecalho-projecao > div { padding-block: .42rem; }
+.apresentacao .cabecalho-projecao h1 { font-size: clamp(1rem, 2vw, 1.62rem); }
+.apresentacao .marcas-projecao img { height: 1.95rem; }
+.apresentacao .marcas-projecao img[alt="Instituto de Computação"] { height: 1.76rem; }
+.apresentacao .roteiro-menu { padding-block: .18rem; }
+.apresentacao .roteiro-menu .capitulo-btn { min-height: 1.95rem; padding-block: .26rem; }
+.apresentacao .rodape-projecao > div { min-height: 2.28rem; }
+.apresentacao .projecao-fontes { line-height: 1.3; padding-block: .14rem .23rem; overflow-wrap: anywhere; }
+
+#btnFiltrosTerritoriais { display: none; }
+.apresentacao:has(#territorio:not([hidden])) #btnFiltrosTerritoriais { display: inline-flex; }
+#filtrosTerritoriais {
+  box-sizing: border-box;
+  inset: 3.45rem var(--margem) auto auto;
+  width: min(52rem, calc(100vw - 2 * var(--margem)));
+  max-height: calc(100dvh - 4.25rem);
+  overflow: auto;
+  margin: 0;
+  background: #fff;
+  color: var(--texto);
+  padding: var(--espaco-paineis);
+  border: 1px solid var(--linha);
+  border-top: 3px solid var(--acento);
+  border-radius: var(--raio-painel);
+}
+.apresentacao:not(:has(#territorio:not([hidden]))) #filtrosTerritoriais { display: none; }
+.filtros-titulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--espaco-paineis);
+}
+.filtros-titulo h2 { color: var(--ufal); font-size: 1.05rem; font-weight: 600; }
+.filtros-titulo button {
+  color: var(--ufal);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-painel);
+  padding: .25rem .5rem;
+  font-size: .84rem;
+  font-weight: 600;
+}
+#filtrosTerritoriais > section { margin-top: var(--espaco-paineis); }
+#filtrosTerritoriais [class*="shadow"] { box-shadow: none; }
+#filtrosTerritoriais :is(.rounded-xl, .rounded-2xl, button.rounded-full) { border-radius: var(--raio-painel); }
+#filtrosTerritoriais .meso-pill { padding: .3rem .48rem; font-size: .8rem; }
+#filtrosTerritoriais [id^="kpi"] { font-family: var(--mono); }
+
+#palco { container-type: size; }
+#quadro { padding-block: var(--espaco-paineis); }
+#territorio > #painelTerritorial { margin-top: 0; }
+#quadro #painelTerritorial .tab-panel > .slide-graficos,
+#quadro #painelTerritorial #tab3 > div > .slide-graficos {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+#quadro #painelTerritorial .slide-graficos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-paineis);
+  min-width: 0;
+}
+#quadro #painelTerritorial .slide-graficos > * { margin-block: 0; }
+#quadro #painelTerritorial .slide-graficos :is(h2, h3, h4) { color: var(--ufal); }
+#quadro .slide-graficos .titulo-grafico-territorial {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--espaco-paineis);
+}
+.titulo-grafico-territorial h2 { font-size: 1.12rem; color: var(--ufal); }
+.nota-grafico { position: relative; flex-shrink: 0; }
+.nota-grafico summary {
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-painel);
+  background: #fff;
+  color: var(--ufal);
+  padding: .18rem .5rem;
+  cursor: pointer;
+  font-size: .78rem;
+  font-weight: 600;
+}
+#quadro #painelTerritorial #tab1 #tab1Banner {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + .3rem);
+  right: 0;
+  width: min(34rem, 75vw);
+  margin: 0;
+  padding: var(--espaco-paineis);
+  background: #fff;
+  color: var(--texto);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-painel);
+}
+#quadro #tab1BannerIcon { display: none; }
+#quadro #tab1SideContainer {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espaco-paineis);
+}
+#quadro #painelTerritorial :is(#tab1, #tab2, #tab3) .slide-graficos > .border-b { padding-block: 0 .35rem; border-color: var(--linha); }
+#quadro #painelTerritorial .slide-graficos button { padding-block: .25rem; }
+#quadro :is(#tab1 .painel-grafico, #tab1SingleContainer, #tab2 .grafico-territorial, #tab3 #stackedChartWrap) {
+  background: #fff;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-painel);
+  padding: .55rem;
+}
+#quadro #tab1SingleContainer { display: flex; min-height: 0; min-width: 0; }
+#quadro #tab1SingleContainer.hidden { display: none; }
+#quadro #tab1 .painel-grafico {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+#quadro #tab1 .painel-grafico > div:first-child { min-height: 1.6rem; }
+#quadro #tab1 .painel-grafico .grafico-territorial { min-height: 0; }
+#quadro #tab1 .painel-grafico .text-red-700 { color: var(--risco); }
+#quadro #painelTerritorial[data-visao="regioes-indicadores"] #tab3 > div > .slide-graficos { display: none; }
+
+#quadro :is([data-passo="modelos"], [data-passo="validacao"], [data-passo="testes"], [data-passo="calibracao"], [data-passo="verificacao"]) > div {
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+#quadro :is([data-passo="modelos"], [data-passo="validacao"], [data-passo="testes"], [data-passo="calibracao"], [data-passo="verificacao"]) > div + div {
+  border-top: 1px solid var(--linha);
+  padding-top: .65rem;
+}
+#quadro .modelo-comparativo { gap: var(--espaco-paineis); }
+#quadro .modelo-comparativo > div { background: #fff; border-radius: var(--raio-painel); padding: .6rem; }
+#quadro :is(.faixa-calibracao, .perfil-guia) {
+  background: #fff;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-painel);
+}
+#quadro :is(.faixa-calibracao-60, .faixa-calibracao-70) { border-left: 3px solid var(--acento); }
+#quadro :is(.faixa-calibracao, [data-passo="validacao"] p, [data-passo="verificacao"] p, [data-passo="testes"] p) { color: var(--texto); }
+#quadro :is([class*="bg-[#F8FAFC]"], .bg-red-50, .bg-sky-50, .bg-indigo-50,
+  [class*="bg-red-50/"], [class*="bg-sky-50/"]) {
+  background-color: #fff;
+}
+#quadro :is(div, p)[class*="border-l-4"].bg-sky-50 { border-left-width: 1px; border-color: var(--linha); }
+#quadro .amostra-treino .amostra-colunas { max-width: 40rem; }
+#quadro .amostra-colunas .analise-colunas-dados { --altura-grafico: clamp(7.2rem, 29cqh, 16rem); }
+#quadro .amostra-colunas .analise-colunas-eixo { height: clamp(7.2rem, 29cqh, 16rem); }
+#quadro .amostra-colunas .classe-interesse { background: var(--risco); }
+#quadro .amostra-colunas .classe-majoritaria { background: var(--linha); }
+
+@media (min-width: 800px) and (min-height: 520px) {
+  #quadro #painelTerritorial .slide-graficos { height: calc(100cqh - 2 * var(--espaco-paineis)); }
+  #quadro #tab1 .slide-graficos > :is(#tab1SingleContainer, #tab1SideContainer),
+  #quadro #tab2 .slide-graficos > .grafico-territorial,
+  #quadro #tab3 .slide-graficos > .grafico-territorial { flex: 1; min-height: 0; }
+  #quadro #painelTerritorial .tab-panel .slide-graficos .grafico-territorial { height: auto; }
+  #quadro #tab1 .slide-graficos .grafico-territorial { flex: 1; }
+  #quadro #tab1 .slide-graficos > .border-b { flex-direction: row; align-items: center; gap: .35rem; }
+  #quadro #tab1 .slide-graficos > .border-b > :first-child { padding: .1rem; gap: .2rem; }
+  #quadro #tab1 .slide-graficos > .border-b button { padding-inline: .45rem; font-size: .82rem; }
+  #quadro [data-passo="calibracao"] div:has(> #chartCalibracao) { height: min(73cqh, 73dvh); }
+  #quadro [data-passo="validacao"] .analise-colunas-dados { --altura-grafico: min(59cqh, 66dvh); }
+  #quadro [data-passo="validacao"] .analise-colunas-eixo { height: min(59cqh, 66dvh); }
+  #quadro [data-passo="testes"] .analise-colunas-dados { --altura-grafico: min(50cqh, 58dvh); }
+  #quadro [data-passo="testes"] .analise-colunas-eixo { height: min(50cqh, 58dvh); }
+  #quadro [data-passo="verificacao"] .analise-colunas-dados { --altura-grafico: min(53cqh, 60dvh); }
+  #quadro [data-passo="verificacao"] .analise-colunas-eixo { height: min(53cqh, 60dvh); }
+}
+@media (max-width: 799px) {
+  #quadro #tab1SideContainer { grid-template-columns: minmax(0, 1fr); }
+  #quadro #tab1 .painel-grafico > div:first-child { flex-wrap: wrap; }
+  #quadro .amostra-colunas .analise-colunas-dados { --altura-grafico: 8rem; }
+  #quadro .amostra-colunas .analise-colunas-eixo { height: 8rem; }
+}
+@media (max-width: 450px) {
+  .apresentacao .cabecalho-projecao:has(#btnFiltrosTerritoriais) .marcas-projecao { gap: .32rem; padding-right: .38rem; }
+  .apresentacao .cabecalho-acoes { gap: .33rem; }
+  #btnFiltrosTerritoriais { white-space: nowrap; font-size: .68rem; }
+  #quadro .slide-graficos .titulo-grafico-territorial { flex-wrap: wrap; }
+}
+
+.observacao-grafico { color: var(--texto); font-size: .86rem; }
+.observacao-grafico summary { cursor: pointer; color: var(--ufal); font-weight: 600; }
+.observacao-grafico[open] > p {
+  margin-top: .35rem;
+  padding: .5rem .6rem;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-painel);
+  background: #fff;
+}
+.legenda-resultado {
+  border-top: 1px solid var(--linha);
+  padding-top: .5rem;
+  font-size: .86rem;
+}
+
+/* O ranking traz um nome para cada barra, inclusive em janelas baixas. */
+@media (min-width: 800px) and (min-height: 520px) {
+  #quadro #painelTerritorial #tab1 .slide-graficos { min-height: 26.5rem; }
+  #quadro #painelTerritorial #tab1:has(.tab1-slice-btn[data-slice="top15"].text-white) .slide-graficos {
+    min-height: 31rem;
+  }
+}
+@media (max-width: 799px), (max-height: 519px) {
+  #quadro #painelTerritorial #tab1 .grafico-territorial { min-height: 14rem; }
+  #quadro #painelTerritorial #tab1:has(.tab1-slice-btn[data-slice="top15"].text-white) .grafico-territorial {
+    min-height: 18.5rem;
+  }
+}
