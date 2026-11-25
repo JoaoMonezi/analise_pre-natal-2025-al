@@ -1007,30 +1007,44 @@ body.apresentacao {
   background: #f8fafc;
 }
 
-#quadro .municipio-calor-legenda {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: .3rem .45rem;
-  margin-top: .6rem;
-  color: #475569;
-  font-size: .76rem;
-}
-.municipio-calor-legenda span:not(:first-child) {
-  border: 1px solid #e2e8f0;
-  border-radius: 4px;
-  padding: .15rem .4rem;
-}
-.municipio-calor-sub { background: #fed7aa; }
-.municipio-calor-neutro { background: #f8fafc; }
-.municipio-calor-super { background: #bfdbfe; }
-#quadro .municipio-perfil td.municipio-calor { color: #0f172a; font-weight: 650; background: #fff; }
-#quadro .municipio-perfil td[data-efeito="subestimou"] {
-  background: color-mix(in srgb, #fed7aa var(--intensidade), #fff);
-}
-#quadro .municipio-perfil td[data-efeito="superestimou"] {
-  background: color-mix(in srgb, #bfdbfe var(--intensidade), #fff);
-}
 #quadro #territorio:has([data-passo="municipio-perfil"]:not([hidden])) #xrayPanel {
   display: none;
 }
+
+#quadro .municipio-perfil-controles {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .55rem .95rem;
+  margin: .75rem 0;
+}
+.municipio-calor-legenda {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  color: #475569;
+  font-size: .78rem;
+}
+.municipio-calor-escala {
+  display: inline-block;
+  width: 7.25rem;
+  height: .68rem;
+  border: 1px solid #dbe3eb;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #fff, #005a9c);
+}
+.municipio-perfil:has(#municipio-perfil-escola:checked) [data-dimensao="raca"],
+.municipio-perfil:has(#municipio-perfil-raca:checked) [data-dimensao="escola"] { display: none; }
+#quadro .municipio-calor-matriz { table-layout: fixed; min-width: 36rem; }
+#quadro .municipio-calor-matriz thead th { text-align: center; }
+#quadro .municipio-calor-matriz td {
+  text-align: center;
+  background: color-mix(in srgb, #005a9c var(--intensidade, 0%), #fff);
+  color: #0f172a;
+}
+#quadro .municipio-calor-matriz td.municipio-calor-escuro { color: #fff; }
+#quadro .municipio-calor-matriz td.municipio-sem-calor { background: #f1f5f9; color: #475569; }
+.municipio-calor-matriz strong { display: block; font-size: .99rem; }
+.municipio-calor-matriz small { display: block; margin-top: .15rem; font-size: .73rem; font-weight: 400; }
+#quadro .municipio-perfil .municipio-perfil-nota { margin-top: .55rem; font-size: .76rem; }

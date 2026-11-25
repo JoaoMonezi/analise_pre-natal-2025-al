@@ -274,7 +274,7 @@
   </style>
   <link href="Recursos/visual.css?v=tela-cheia" rel="stylesheet">
   <link href="Recursos/layout.css" rel="stylesheet">
-  <link href="Recursos/editorial.css?v=municipio-perfil-calor" rel="stylesheet">
+  <link href="Recursos/editorial.css?v=municipio-perfil-descritivo" rel="stylesheet">
 </head>
 <body class="apresentacao antialiased capa-ativa">
 
@@ -1431,22 +1431,49 @@
       </div>
       <div data-passo="municipio-perfil" hidden>
         <div class="bg-white painel-editorial municipio-perfil">
-          <p class="municipio-perfil-tag">Análise exploratória · Teste de nov–dez/2025</p>
+          <p class="municipio-perfil-tag">Análise descritiva · SINASC Alagoas 2025</p>
           <h2>Município × perfil socioeconômico</h2>
-          <p>Comparamos a proporção observada de menos de sete consultas com a probabilidade média da regressão 4a. Maceió, Arapiraca e Rio Largo foram os três municípios com mais registros no teste.</p>
-          <div class="municipio-calor-legenda" aria-label="Legenda do mapa de calor">
-            <span>Diferença em pontos percentuais · cor mais forte indica maior diferença.</span>
-            <span class="municipio-calor-sub">Subestimou (−)</span>
-            <span class="municipio-calor-neutro">Perto de zero</span>
-            <span class="municipio-calor-super">Superestimou (+)</span>
+          <p>Proporção observada de nascidos vivos com menos de sete consultas, nos três municípios de residência com mais registros na base de 2025.</p>
+          <div class="municipio-perfil-controles">
+            <fieldset class="grupo-erro-seletor municipio-perfil-seletor">
+              <legend class="sr-only">Característica materna</legend>
+              <input class="sr-only" type="radio" name="municipio-perfil-dimensao" id="municipio-perfil-escola" checked>
+              <label for="municipio-perfil-escola">Escolaridade</label>
+              <input class="sr-only" type="radio" name="municipio-perfil-dimensao" id="municipio-perfil-raca">
+              <label for="municipio-perfil-raca">Raça/cor</label>
+            </fieldset>
+            <div class="municipio-calor-legenda" aria-label="Escala de zero a sessenta por cento">
+              <span>0%</span><span class="municipio-calor-escala" aria-hidden="true"></span><span>60%</span>
+            </div>
           </div>
-          <div class="overflow-x-auto mt-3"><table class="tabela-painel"><thead><tr><th scope="col">Município</th><th scope="col">Escolaridade</th><th scope="col">Registros</th><th scope="col">Observada</th><th scope="col">Média prevista</th><th scope="col">Diferença (p.p.)</th></tr></thead><tbody><tr><th scope="row">Maceió</th><td>4 a 7 anos</td><td>203</td><td>52,22%</td><td>47,31%</td><td class="municipio-calor" data-efeito="subestimou" style="--intensidade:49%">−4,90</td></tr><tr><th scope="row">Maceió</th><td>8 a 11 anos</td><td>1.299</td><td>27,79%</td><td>32,24%</td><td class="municipio-calor" data-efeito="superestimou" style="--intensidade:44%">+4,45</td></tr><tr><th scope="row">Maceió</th><td>12 anos ou mais</td><td>572</td><td>13,46%</td><td>19,35%</td><td class="municipio-calor" data-efeito="superestimou" style="--intensidade:59%">+5,89</td></tr><tr><th scope="row">Arapiraca</th><td>4 a 7 anos</td><td>50</td><td>18,00%</td><td>23,06%</td><td class="municipio-calor" data-efeito="superestimou" style="--intensidade:51%">+5,06</td></tr><tr><th scope="row">Arapiraca</th><td>8 a 11 anos</td><td>369</td><td>15,18%</td><td>15,44%</td><td class="municipio-calor" data-efeito="superestimou" style="--intensidade:3%">+0,27</td></tr><tr><th scope="row">Arapiraca</th><td>12 anos ou mais</td><td>124</td><td>8,87%</td><td>8,91%</td><td class="municipio-calor" data-efeito="superestimou" style="--intensidade:0%">+0,04</td></tr><tr><th scope="row">Rio Largo</th><td>4 a 7 anos</td><td>22</td><td>27,27%</td><td>33,45%</td><td class="municipio-calor" data-efeito="superestimou" style="--intensidade:62%">+6,17</td></tr><tr><th scope="row">Rio Largo</th><td>8 a 11 anos</td><td>131</td><td>19,85%</td><td>21,01%</td><td class="municipio-calor" data-efeito="superestimou" style="--intensidade:12%">+1,17</td></tr><tr><th scope="row">Rio Largo</th><td>12 anos ou mais</td><td>25</td><td>16,00%</td><td>13,92%</td><td class="municipio-calor" data-efeito="subestimou" style="--intensidade:21%">−2,08</td></tr></tbody></table></div>
-          <p class="municipio-perfil-achado"><strong>Em Maceió, a diferença mudou de sinal.</strong> O modelo subestimou a proporção entre mães com 4 a 7 anos de estudo e superestimou entre as com 12 anos ou mais.</p>
-          <details class="observacao-grafico mt-3">
-            <summary>Ver cruzamento com raça/cor</summary>
-            <p>Exibimos combinações com pelo menos 50 registros. Raça/cor foi usada para agrupar as previsões da 4a. Este recorte descreve diferenças entre grupos e indica onde investigar uma possível interação entre município e perfil.</p>
-            <div class="overflow-x-auto mt-2"><table class="tabela-painel"><thead><tr><th scope="col">Município</th><th scope="col">Escolaridade</th><th scope="col">Raça/cor</th><th scope="col">Registros</th><th scope="col">Observada</th><th scope="col">Média prevista</th><th scope="col">Diferença (p.p.)</th></tr></thead><tbody><tr><th scope="row">Maceió</th><td>4 a 7 anos</td><td>Parda</td><td>189</td><td>52,91%</td><td>47,24%</td><td class="municipio-calor" data-efeito="subestimou" style="--intensidade:57%">−5,67</td></tr><tr><th scope="row">Maceió</th><td>8 a 11 anos</td><td>Branca</td><td>94</td><td>23,40%</td><td>29,30%</td><td class="municipio-calor" data-efeito="superestimou" style="--intensidade:59%">+5,90</td></tr><tr><th scope="row">Maceió</th><td>8 a 11 anos</td><td>Parda</td><td>1.161</td><td>28,42%</td><td>32,46%</td><td class="municipio-calor" data-efeito="superestimou" style="--intensidade:40%">+4,04</td></tr><tr><th scope="row">Maceió</th><td>12 anos ou mais</td><td>Branca</td><td>208</td><td>9,62%</td><td>17,73%</td><td class="municipio-calor" data-efeito="superestimou" style="--intensidade:81%">+8,11</td></tr><tr><th scope="row">Maceió</th><td>12 anos ou mais</td><td>Parda</td><td>335</td><td>15,82%</td><td>20,40%</td><td class="municipio-calor" data-efeito="superestimou" style="--intensidade:46%">+4,57</td></tr><tr><th scope="row">Arapiraca</th><td>8 a 11 anos</td><td>Parda</td><td>346</td><td>14,74%</td><td>15,41%</td><td class="municipio-calor" data-efeito="superestimou" style="--intensidade:7%">+0,67</td></tr><tr><th scope="row">Arapiraca</th><td>12 anos ou mais</td><td>Parda</td><td>93</td><td>7,53%</td><td>9,13%</td><td class="municipio-calor" data-efeito="superestimou" style="--intensidade:16%">+1,60</td></tr><tr><th scope="row">Rio Largo</th><td>8 a 11 anos</td><td>Parda</td><td>122</td><td>18,85%</td><td>21,24%</td><td class="municipio-calor" data-efeito="superestimou" style="--intensidade:24%">+2,39</td></tr></tbody></table></div>
-          </details>
+          <div class="municipio-perfil-matriz" data-dimensao="escola">
+            <div class="overflow-x-auto">
+              <table class="tabela-painel municipio-calor-matriz">
+                <caption class="sr-only">Proporção observada por município e escolaridade</caption>
+                <thead><tr><th scope="col">Município</th><th scope="col">Nenhuma</th><th scope="col">1 a 3 anos</th><th scope="col">4 a 7 anos</th><th scope="col">8 a 11 anos</th><th scope="col">12 anos ou mais</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">Maceió<small>12.929 nascimentos</small></th><td class="municipio-calor-escuro" style="--intensidade:90%"><strong>54,05%</strong><small>20 / 37</small></td><td class="municipio-calor-escuro" style="--intensidade:94%"><strong>56,25%</strong><small>90 / 160</small></td><td class="municipio-calor-escuro" style="--intensidade:87%"><strong>52,12%</strong><small>701 / 1.345</small></td><td style="--intensidade:55%"><strong>32,73%</strong><small>2.646 / 8.084</small></td><td style="--intensidade:24%"><strong>14,43%</strong><small>476 / 3.299</small></td></tr>
+<tr><th scope="row">Arapiraca<small>3.589 nascimentos</small></th><td class="municipio-sem-calor"><strong>—</strong><small>n = 17</small></td><td class="municipio-sem-calor"><strong>—</strong><small>n = 20</small></td><td style="--intensidade:41%"><strong>24,80%</strong><small>91 / 367</small></td><td style="--intensidade:24%"><strong>14,70%</strong><small>338 / 2.300</small></td><td style="--intensidade:17%"><strong>10,41%</strong><small>92 / 884</small></td></tr>
+<tr><th scope="row">Rio Largo<small>1.279 nascimentos</small></th><td class="municipio-sem-calor"><strong>—</strong><small>n = 2</small></td><td class="municipio-sem-calor"><strong>—</strong><small>n = 11</small></td><td style="--intensidade:52%"><strong>31,25%</strong><small>60 / 192</small></td><td style="--intensidade:37%"><strong>22,12%</strong><small>207 / 936</small></td><td style="--intensidade:19%"><strong>11,59%</strong><small>16 / 138</small></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="municipio-perfil-matriz" data-dimensao="raca">
+            <div class="overflow-x-auto">
+              <table class="tabela-painel municipio-calor-matriz">
+                <caption class="sr-only">Proporção observada por município e raça/cor</caption>
+                <thead><tr><th scope="col">Município</th><th scope="col">Amarela</th><th scope="col">Branca</th><th scope="col">Indígena</th><th scope="col">Parda</th><th scope="col">Preta</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">Maceió<small>12.929 nascimentos</small></th><td style="--intensidade:49%"><strong>29,59%</strong><small>29 / 98</small></td><td style="--intensidade:29%"><strong>17,50%</strong><small>305 / 1.743</small></td><td class="municipio-sem-calor"><strong>—</strong><small>n = 16</small></td><td style="--intensidade:54%"><strong>32,60%</strong><small>3.461 / 10.616</small></td><td style="--intensidade:49%"><strong>29,52%</strong><small>129 / 437</small></td></tr>
+<tr><th scope="row">Arapiraca<small>3.589 nascimentos</small></th><td class="municipio-sem-calor"><strong>—</strong><small>n = 5</small></td><td style="--intensidade:25%"><strong>15,12%</strong><small>52 / 344</small></td><td class="municipio-sem-calor"><strong>—</strong><small>n = 0</small></td><td style="--intensidade:25%"><strong>14,72%</strong><small>471 / 3.200</small></td><td style="--intensidade:27%"><strong>16,22%</strong><small>6 / 37</small></td></tr>
+<tr><th scope="row">Rio Largo<small>1.279 nascimentos</small></th><td class="municipio-sem-calor"><strong>—</strong><small>n = 12</small></td><td style="--intensidade:33%"><strong>19,54%</strong><small>17 / 87</small></td><td class="municipio-sem-calor"><strong>—</strong><small>n = 2</small></td><td style="--intensidade:38%"><strong>22,92%</strong><small>262 / 1.143</small></td><td style="--intensidade:27%"><strong>16,13%</strong><small>5 / 31</small></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <p class="municipio-perfil-nota">Cada célula mostra a proporção e a contagem de casos / nascimentos no grupo. Células com menos de 30 registros mostram apenas o tamanho do grupo. As categorias exibidas têm informação conhecida.</p>
+          <p class="municipio-perfil-achado"><strong>Em Maceió, o contraste por escolaridade foi marcado.</strong> A proporção observada foi de 52,12% entre mães com 4 a 7 anos de estudo e 14,43% entre as com 12 anos ou mais.</p>
         </div>
       </div>
     </section>
