@@ -988,3 +988,21 @@ body.apresentacao {
 .auditoria-tabelas p { margin: .55rem 0; color: #475569; font-size: .85rem; }
 .auditoria-tabelas h5 { margin-top: .85rem; font-weight: 650; color: #003366; }
 .auditoria-tabelas table { min-width: 36rem; font-variant-numeric: tabular-nums; }
+
+#quadro .municipio-perfil h2 { font-size: clamp(1.25rem, 2vw, 1.65rem); }
+#quadro .municipio-perfil > p { margin-top: .35rem; font-size: .87rem; }
+#quadro .municipio-perfil .municipio-perfil-tag {
+  margin-top: 0;
+  color: #005a9c;
+  font-size: .74rem;
+  font-weight: 650;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+#quadro .municipio-perfil table { min-width: 35rem; font-variant-numeric: tabular-nums; }
+#quadro .municipio-perfil .municipio-perfil-achado {
+  margin-top: .75rem;
+  border-left: 3px solid #005a9c;
+  padding: .35rem .6rem;
+  background: #f8fafc;
+}
