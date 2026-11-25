@@ -14,7 +14,7 @@ O estudo investiga como a frequência de menos de sete consultas de pré-natal v
 
 1. Como escolaridade, raça/cor e faixa etária da mãe se associam à proporção de nascidos vivos com menos de sete consultas?
 2. Como essa proporção varia entre os municípios e de que maneira a contagem absoluta distorce a comparação?
-3. O perfil da mãe e o município onde ela mora ajudam a prever menos de sete consultas de pré-natal? Quando usamos essa previsão para gerar alertas, quantos casos reais identificamos e quantos alertas são falsos?
+3. O perfil da mãe e o município onde ela mora ajudam a prever menos de sete consultas de pré-natal?
 
 ## Principais resultados
 
