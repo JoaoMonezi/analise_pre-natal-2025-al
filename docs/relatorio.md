@@ -6,7 +6,7 @@ Professora Cristina Tenório · Maceió, 22/11/2026
 
 **Equipe:** Emerson Ferreira Barros, Pedro Lucas Leite da Silva, Weverton Deyvison da Silva, Diego Matheus Bastos de Oliveira e Joao Marcos de Lima Monezi.
 
-Esta versão em Markdown preserva o conteúdo analítico do relatório entregue. A [apresentação interativa](https://joaomonezi.github.io/analise_pre-natal-2025-al/) também inclui as análises complementares feitas após a apresentação.
+Esta versão em Markdown inclui as revisões feitas após a apresentação. A [apresentação interativa](https://joaomonezi.github.io/analise_pre-natal-2025-al/) também inclui as análises complementares feitas após a apresentação.
 
 ## Sumário
 
@@ -26,7 +26,7 @@ Pergunta 1. Como escolaridade, raça/cor e faixa etária da mãe se associam à 
 
 Pergunta 2. Como essa proporção varia entre os municípios e de que maneira a contagem absoluta distorce a comparação?
 
-Pergunta 3. Quanto o perfil socioeconômico e demográfico da mãe e o município de residência ajudam a prever menos de sete consultas?
+Pergunta 3. O perfil da mãe e o município onde ela mora ajudam a prever menos de sete consultas de pré-natal? Quando usamos essa previsão para gerar alertas, quantos casos reais identificamos e quantos alertas são falsos?
 
 # 2 DADOS E TRATAMENTO
 
@@ -255,9 +255,21 @@ O mapa regional revela claro gradiente leste para oeste: o Leste Alagoano concen
 
 **Conclusão:** A análise dos 46.347 nascimentos válidos de 2025 confirma acentuada desigualdade territorial em Alagoas (de 0,00% em Paulo Jacinto a 34,05% em Cajueiro), com maior vulnerabilidade concentrada no Leste Alagoano (23,18%) frente ao Agreste (15,51%) e ao Sertão (12,03%). Demonstrou-se ainda que rankings absolutos espelham o tamanho populacional (r = 0,9868), distorcendo o diagnóstico regional ao superestimar polos como Arapiraca (14,77%) e ocultar municípios menores com déficit severo, além de revelar que os 51 registros ignorados representam falhas localizadas de preenchimento em 4 unidades associadas a perfis de maior vulnerabilidade.
 
+## 4.5 Município e perfil socioeconômico
+
+Comparamos escolaridade e raça/cor maternas em Maceió, Arapiraca e Rio Largo, os três municípios com mais registros válidos no SINASC de 2025. Cada célula mostra a proporção observada de nascidos vivos com menos de sete consultas no cruzamento e o número de registros do grupo. Categorias ignoradas ficam fora dos mapas. Para grupos com menos de 30 registros, exibimos apenas a contagem, pois poucos casos podem alterar muito a proporção.
+
+![Mapas de calor de escolaridade e raça/cor maternas em Maceió, Arapiraca e Rio Largo](relatorio-assets/municipio-perfil-socioeconomico.png)
+
+Figura 4 – Proporção observada com menos de sete consultas por município e grupo materno
+
+Fonte: elaboração do grupo com dados do SINASC.
+
+Nos três municípios, a proporção foi maior entre mães com 4 a 7 anos de estudo do que entre as com 12 anos ou mais. Em Maceió, as proporções dessas faixas foram 52,12% e 14,43%. A distribuição por raça/cor também pode ser examinada dentro de cada município, acompanhando os tamanhos dos grupos. O recorte descreve os registros de 2025. Diferenças de composição entre os grupos podem influenciar a comparação.
+
 # 5 MODELO PREDITIVO
 
-Quanto o perfil socioeconômico e demográfico da mãe e o município de residência ajudam a prever menos de sete consultas? Nesta seção, o histórico obstétrico também é avaliado como um bloco de variáveis.
+O perfil da mãe e o município onde ela mora ajudam a prever menos de sete consultas de pré-natal? Quando usamos essa previsão para gerar alertas, quantos casos reais identificamos e quantos alertas são falsos? O histórico obstétrico também foi avaliado como bloco de variáveis.
 
 ## 5.1 Método
 
@@ -365,9 +377,26 @@ Fonte: elaboração do grupo com dados do SINASC.
 
 Na faixa de 60% a 70%, a média prevista ficou perto de 63% nos dois testes. A proporção observada foi 50,0% em 2025 e 52,5% em 2026. Na faixa de 70% a 80%, havia só 2 registros em 2025 e 8 em 2026. A baixa contagem torna esses pontos instáveis e limita a interpretação da superestimação nas faixas mais altas.
 
+### 5.2.6 Verificação de sobreajuste
+
+Após a apresentação, comparamos o desempenho no treino e em períodos posteriores com a mesma regressão 4a e o mesmo pré-processamento ajustados em janeiro a agosto de 2025. A referência constante também foi congelada na proporção de casos do treino. Essa comparação difere dos resultados operacionais acima, que usam reajustes antes de cada teste.
+
+Tabela 5 – Desempenho da regressão 4a sem reajuste entre janelas
+
+| Janela | Registros | ROC-AUC | Brier 4a | Brier da referência |
+|:---|---:|---:|---:|---:|
+| Treino · jan–ago/2025 | 31.629 | 0,7052 | 0,14995 | 0,16643 |
+| Validação · set–out/2025 | 7.490 | 0,7108 | 0,12976 | 0,14252 |
+| Teste · nov–dez/2025 | 7.228 | 0,6977 | 0,13250 | 0,14463 |
+| Teste · jan–ago/2026 | 28.664 | 0,6971 | 0,14377 | 0,15778 |
+
+Fonte: elaboração do grupo com dados do SINASC.
+
+A ROC-AUC foi de 0,7052 no treino e ficou próxima de 0,70 nos dois testes. O erro de Brier ficou abaixo do erro da referência constante em todas as janelas. Como a frequência do alvo variou entre os períodos, a comparação com a referência na mesma janela ajuda a interpretar o erro. Na validação fixa de setembro e outubro, ampliar o treino de janeiro–abril para janeiro–agosto elevou a ROC-AUC de 0,7054 para 0,7108, enquanto a ROC-AUC do treino passou de 0,7146 para 0,7052. Essas verificações não mostraram sinais fortes de sobreajuste. A proximidade entre a média prevista e a observada em 2026 resume o conjunto e, sozinha, diz pouco sobre a qualidade das previsões individuais.
+
 ## 5.3 Interpretação e limitações
 
-O perfil materno, o município e o histórico ajudaram a estimar probabilidades, com ganho moderado nos dois testes. As probabilidades são o resultado principal. A regra de alerta mostra o volume de falsos positivos associado à prioridade de detectar casos.
+Na validação, a ROC-AUC foi de 0,6193 com o perfil materno, 0,6819 com o município e 0,7108 com o histórico ampliado. O município trouxe o maior ganho entre os blocos testados. Nos testes de 2025 e 2026, o limiar de 11,88% identificou 85,22% e 86,13% dos casos reais. Só 21,12% e 23,89% dos alertas correspondiam a casos reais, com 3.984 e 15.413 falsos positivos, respectivamente. As probabilidades podem apoiar a leitura agregada, e os alertas ilustram uma possível aplicação individual.
 
 A avaliação retrospectiva cobre nascidos vivos registrados. A declaração de nascimento aproxima as informações do início da gestação. Gestações mais curtas podem ter menos tempo para acumular consultas, e a contagem representa uma dimensão do cuidado. A prévia de 2026 tem cobertura parcial e pode ser revisada.
 
