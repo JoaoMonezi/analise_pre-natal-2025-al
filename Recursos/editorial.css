@@ -1006,3 +1006,31 @@ body.apresentacao {
   padding: .35rem .6rem;
   background: #f8fafc;
 }
+
+#quadro .municipio-calor-legenda {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .3rem .45rem;
+  margin-top: .6rem;
+  color: #475569;
+  font-size: .76rem;
+}
+.municipio-calor-legenda span:not(:first-child) {
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: .15rem .4rem;
+}
+.municipio-calor-sub { background: #fed7aa; }
+.municipio-calor-neutro { background: #f8fafc; }
+.municipio-calor-super { background: #bfdbfe; }
+#quadro .municipio-perfil td.municipio-calor { color: #0f172a; font-weight: 650; background: #fff; }
+#quadro .municipio-perfil td[data-efeito="subestimou"] {
+  background: color-mix(in srgb, #fed7aa var(--intensidade), #fff);
+}
+#quadro .municipio-perfil td[data-efeito="superestimou"] {
+  background: color-mix(in srgb, #bfdbfe var(--intensidade), #fff);
+}
+#quadro #territorio:has([data-passo="municipio-perfil"]:not([hidden])) #xrayPanel {
+  display: none;
+}
